@@ -8,9 +8,13 @@ import { Layout } from "./utility/context/Layout"
 import * as serviceWorker from "./serviceWorker"
 import { store } from "./redux/storeConfig/store"
 import Spinner from "./components/@vuexy/spinner/Fallback-spinner"
+import axios  from "axios"
 import "./index.scss"
 import "./@fake-db"
-
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+import "./assets/scss/plugins/extensions/toastr.scss"
+axios.defaults.baseURL = 'http://sportpr-api.apptest.uz/api/'
 const LazyApp = lazy(() => import("./App"))
 
 // configureDatabase()
@@ -22,6 +26,7 @@ ReactDOM.render(
     redirect_uri={window.location.origin + process.env.REACT_APP_PUBLIC_PATH}>
     <Provider store={store}>
       <Suspense fallback={<Spinner />}>
+        <ToastContainer />
         <Layout>
           <IntlProviderWrapper>
             <LazyApp />

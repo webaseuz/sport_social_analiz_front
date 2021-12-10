@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Sidebar from "react-sidebar";
 import { Row,Col,UncontrolledButtonDropdown,DropdownToggle,DropdownItem,DropdownMenu,Card,CardBody,Table } from 'reactstrap'
 import { ChevronDown,Filter,Printer } from 'react-feather'
 
@@ -35,22 +34,42 @@ const SpesService = () => {
                     </Row>
                     <Row className="mt-3">
                         <Col>
-                            <Table striped responsive >
+                            <Table striped responsive bordered>
                                 <thead>
                                     <tr>
-                                        <th> № </th>
-                                        <th> SpesService </th>
-                                        <th> Web-sayt </th>
-                                        <th> Telegram </th>
-                                        <th> Facebook </th>
-                                        <th> Instagram </th>
-                                        <th> Youtube </th>
-                                        <th> Twitter </th>
-                                        <th> Tiktok </th>
-                                        <th> Teletype </th>
-                                        <th> Others </th>
-                                        <th> Rate </th>
-                                        <th> Actions </th>
+                                        <th style={{ verticalAlign:'middle' }} rowSpan="2" className="bg-primary text-white"> № </th>
+                                        <th style={{ verticalAlign:'middle' }}  rowSpan="2"> SpesService </th>
+                                        <th colSpan="2" className="text-center"> Web-sayt </th>
+                                        <th colSpan="2" className="text-center"> Telegram </th>
+                                        <th colSpan="2" className="text-center"> Facebook </th>
+                                        <th colSpan="2" className="text-center"> Instagram </th>
+                                        <th colSpan="2" className="text-center"> Youtube </th>
+                                        <th colSpan="2" className="text-center"> Twitter </th>
+                                        <th colSpan="2" className="text-center"> Tiktok </th>
+                                        <th colSpan="2" className="text-center"> Teletype </th>
+                                        <th colSpan="2" className="text-center"> Others </th>
+                                        <th style={{ verticalAlign:'middle' }} rowSpan="2"> Rate </th>
+                                        <th style={{ verticalAlign:'middle' }} rowSpan="2"> Actions </th>
+                                    </tr>
+                                    <tr>
+                                        <th> Post </th>
+                                        <th> Prosmotr </th>
+                                        <th> Post </th>
+                                        <th> Prosmotr </th>
+                                        <th> Post </th>
+                                        <th> Prosmotr </th>
+                                        <th> Post </th>
+                                        <th> Prosmotr </th>
+                                        <th> Post </th>
+                                        <th> Prosmotr </th>
+                                        <th> Post </th>
+                                        <th> Prosmotr </th>
+                                        <th> Post </th>
+                                        <th> Prosmotr </th>
+                                        <th> Post </th>
+                                        <th> Prosmotr </th>
+                                        <th> Post </th>
+                                        <th> Prosmotr </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -68,6 +87,16 @@ const SpesService = () => {
                                         <th>11</th>
                                         <th>12</th>
                                         <th>13</th>
+                                        <th>13</th>
+                                        <th>13</th>
+                                        <th>13</th>
+                                        <th>13</th>
+                                        <th>13</th>
+                                        <th>13</th>
+                                        <th>13</th>
+                                        <th>13</th>
+                                        <th>13</th>
+
                                     </tr>
                                     <tr>
                                         <th>1</th>
@@ -82,6 +111,15 @@ const SpesService = () => {
                                         <th>10</th>
                                         <th>11</th>
                                         <th>12</th>
+                                        <th>13</th>
+                                        <th>13</th>
+                                        <th>13</th>
+                                        <th>13</th>
+                                        <th>13</th>
+                                        <th>13</th>
+                                        <th>13</th>
+                                        <th>13</th>
+                                        <th>13</th>
                                         <th>13</th>
                                     </tr> 
                                 </tbody>

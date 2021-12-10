@@ -7,7 +7,7 @@ import customizer from "./customizer/"
 import auth from "./auth/"
 import navbar from "./navbar/Index"
 import dataList from "./data-list/"
-
+// import oblastAction from './others'
 const rootReducer = combineReducers({
   calendar: calenderReducer,
   emailApp: emailReducer,

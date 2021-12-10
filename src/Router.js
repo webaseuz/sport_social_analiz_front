@@ -183,6 +183,9 @@ const specService = lazy(() =>
 const socialMedia = lazy(() =>
   import("./views/SocialMedia")
 )
+const dashboard = lazy(() =>
+  import("./views/dashboard")
+)
 // Set Layout and Component Using App Route
 const RouteConfig = ({ component: Component, fullLayout, ...rest }) => (
   <Route
@@ -236,6 +239,10 @@ class AppRouter extends React.Component {
           <AppRoute
             path="/social-media"
             component={socialMedia}
+          />
+          <AppRoute
+            path="/dashboard"
+            component={dashboard}
           />
           <AppRoute
             path="/email"
