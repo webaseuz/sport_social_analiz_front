@@ -38,16 +38,15 @@ const ThemeNavbar = props => {
   const [oblastlist,setOblastlist] = useState([])
   const [oblastid,setOblastid] = useState('1')
   const setOblast = (item) => {
+    
     setOblastid(item.id)
+    props.oblastAction(item.id)
     console.log(props)
-    oblastAction(item.id)
   }
   useEffect(() => {
     DashboardService.OblastList().then(res => {
       setOblastlist(res.data.data)
     })
-    
-    
   },[])
   return (
     <React.Fragment>
@@ -150,15 +149,17 @@ const ThemeNavbar = props => {
 const mapStateToProps = state => {
   return {
     user: state.auth,
-    oblastid : '1'
+    oblastid : state.oblastid
   }
 }
-const mapDispatchToProps = dispatch => ({
-  oblastAction: (payload) => dispatch(oblastAction(payload))
-});
+// const mapDispatchToProps = dispatch => {
+//   return{
+//     oblastAction: (payload) => dispatch(oblastAction(payload))
+//   }
+// };
 export default connect(mapStateToProps, {
   logoutWithJWT,
   logoutWithFirebase,
   useAuth0,
-  mapDispatchToProps
+  oblastAction
 })(ThemeNavbar)

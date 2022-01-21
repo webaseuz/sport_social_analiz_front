@@ -186,6 +186,12 @@ const socialMedia = lazy(() =>
 const dashboard = lazy(() =>
   import("./views/dashboard")
 )
+const rateList = lazy(() =>
+  import("./views/rate")
+)
+const Top10List = lazy(() =>
+  import("./views/top10")
+)
 // Set Layout and Component Using App Route
 const RouteConfig = ({ component: Component, fullLayout, ...rest }) => (
   <Route
@@ -227,7 +233,9 @@ class AppRouter extends React.Component {
       // Set the directory path if you are deploying in sub-folder
       <Router history={history}>
         <Switch>
-          <AppRoute exact path="/" component={analyticsDashboard} />
+          <AppRoute exact path="/">
+            <Redirect to="/dashboard" />
+          </AppRoute>
           <AppRoute
             path="/ecommerce-dashboard"
             component={ecommerceDashboard}
@@ -239,6 +247,14 @@ class AppRouter extends React.Component {
           <AppRoute
             path="/social-media"
             component={socialMedia}
+          />
+          <AppRoute
+            path="/rate"
+            component={rateList}
+          />
+          <AppRoute
+            path="/top10"
+            component={Top10List}
           />
           <AppRoute
             path="/dashboard"

@@ -9,19 +9,20 @@ import {
     Numbers
   } from "../components/Webase/functions/index.js";
 import { injectIntl } from "react-intl";
+import Top10Service from '../services/top10.service'
 const { t2 } = Translate
-class  SpesService extends React.Component {
+class  Top10 extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            serviceList : [],
             filter : {
                 fromDate : '',
                 toDate : ""
             },
             RateModal : "",
             RateList : [],
-            selectedRate : ''
+            selectedRate : '',
+            top10List : []
         }
     }
     componentDidMount(){
@@ -32,8 +33,9 @@ class  SpesService extends React.Component {
     }
     Refresh = () => {
         var { filter } = this.state
-        SpecService.AllOrganizationStatsData(filter.fromDate,filter.toDate).then(res => {
-            this.setState({ serviceList : res.data.data })
+        
+        Top10Service.top10().then(res => {
+            this.setState({ top10List : res.data.top10 })
         })
     }
     Rate = (item) => {
@@ -44,7 +46,7 @@ class  SpesService extends React.Component {
         })
     }
     render(){
-        const { serviceList,RateModal,selectedRate,RateList } = this.state
+        const { RateModal,selectedRate,RateList,top10List } = this.state
         const { intl } = this.props
         return(
             <div>
@@ -116,7 +118,7 @@ class  SpesService extends React.Component {
                                     </thead>
                                     <tbody>
                                         {
-                                            serviceList?.map((item,index) => (
+                                            top10List?.map((item,index) => (
                                                 <tr key={index}>
                                                     {/* <th>1</th> */}
                                                     <th> { item.name } </th>
@@ -203,4 +205,4 @@ class  SpesService extends React.Component {
     
     
 }
-export default injectIntl(SpesService)
+export default injectIntl(Top10)

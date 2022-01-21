@@ -243,9 +243,9 @@ class NavbarUser extends React.PureComponent {
         <IntlContext.Consumer>
           {context => {
             let langArr = {
-              "en" : "English",
-              "de" : "German",
-              "fr" : "French"
+              "ln" : "Uzbek Latn",
+              "cl" : "Uzbek Cyrl",
+              "ru" : "Russian"
               // "pt" : "Portuguese"
             }
             return (
@@ -260,15 +260,6 @@ class NavbarUser extends React.PureComponent {
                   tag="a"
                   className="nav-link"
                 >
-                  <ReactCountryFlag
-                  className="country-flag"
-                    countryCode={
-                      context.state.locale === "en"
-                        ? "us"
-                        : context.state.locale
-                    }
-                    svg
-                  />
                   <span className="d-sm-inline-block d-none text-capitalize align-middle ml-50">
                     {langArr[context.state.locale]}
                   </span>
@@ -276,24 +267,21 @@ class NavbarUser extends React.PureComponent {
                 <DropdownMenu right>
                   <DropdownItem
                     tag="a"
-                    onClick={e => context.switchLanguage("en")}
+                    onClick={e => context.switchLanguage("ln")}
                   >
-                    <ReactCountryFlag className="country-flag" countryCode="us" svg />
-                    <span className="ml-1">English</span>
+                    <span className="ml-1">Uzbek Latn</span>
                   </DropdownItem>
                   <DropdownItem
                     tag="a"
-                    onClick={e => context.switchLanguage("fr")}
+                    onClick={e => context.switchLanguage("cl")}
                   >
-                    <ReactCountryFlag className="country-flag" countryCode="fr" svg />
-                    <span className="ml-1">French</span>
+                    <span className="ml-1">Uzbek Cyrl</span>
                   </DropdownItem>
                   <DropdownItem
                     tag="a"
-                    onClick={e => context.switchLanguage("de")}
+                    onClick={e => context.switchLanguage("ru")}
                   >
-                    <ReactCountryFlag className="country-flag" countryCode="de" svg />
-                    <span className="ml-1">German</span>
+                    <span className="ml-1">Russian</span>
                   </DropdownItem>
                   {/* <DropdownItem
                     tag="a"
@@ -434,7 +422,7 @@ class NavbarUser extends React.PureComponent {
             </div>
           </div>
         </NavItem>
-        <UncontrolledDropdown
+        {/* <UncontrolledDropdown
           tag="li"
           className="dropdown-notification nav-item"
         >
@@ -496,8 +484,8 @@ class NavbarUser extends React.PureComponent {
               Your Cart Is Empty
             </li>
           </DropdownMenu>
-        </UncontrolledDropdown>
-        <UncontrolledDropdown
+        </UncontrolledDropdown> */}
+        {/* <UncontrolledDropdown
           tag="li"
           className="dropdown-notification nav-item"
         >
@@ -655,7 +643,7 @@ class NavbarUser extends React.PureComponent {
               </DropdownItem>
             </li>
           </DropdownMenu>
-        </UncontrolledDropdown>
+        </UncontrolledDropdown> */}
         <UncontrolledDropdown tag="li" className="dropdown-user nav-item">
           <DropdownToggle tag="a" className="nav-link dropdown-user-link">
             <div className="user-nav d-sm-flex d-none">

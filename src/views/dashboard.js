@@ -1,12 +1,21 @@
 import React from 'react'
-import { Card,Row,Col,UncontrolledTooltip,CardHeader, CardTitle, CardBody } from 'reactstrap'
+import { Card,Row,Col,UncontrolledTooltip,CardHeader, CardTitle, CardBody, Button } from 'reactstrap'
 import StatisticsCard from "../components/@vuexy/statisticsCard/StatisticsCard"
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/light.css";
 import "../assets/scss/plugins/forms/flatpickr/flatpickr.scss"
 import UzbMap from './uzbMap'
 import Overlay from '../components/Webase/components/Overlay';
-import NumbertoThousand from '../components/Webase/functions/Numbers';
+import { connect } from "react-redux"
+import { UzbekLatin } from "flatpickr/dist/l10n/uz_latn";
+import { Russian } from "flatpickr/dist/l10n/ru";
+import { Uzbek } from "flatpickr/dist/l10n/uz";
+import moment from "moment";
+import {
+    Translate,
+    Permission,
+    Numbers
+  } from "../components/Webase/functions/index.js";
 import { 
     Eye,
     MessageSquare,
@@ -20,7 +29,8 @@ import {
     Instagram,
     Youtube,
     Twitter,
-    Users
+    Users,
+    Grid
 } from 'react-feather'
 import {
     LineChart,
@@ -34,51 +44,10 @@ import {
 } from "recharts"
 import DashboardService from '../services/dashboard.service';
 import { toast } from "react-toastify"
+import { injectIntl } from "react-intl";
+const { parseNumber } = Numbers
+const { t2 } = Translate
 
-const data = [
-    {
-      name: "Page A",
-      uv: 4000,
-      pv: 2400,
-      amt: 2400
-    },
-    {
-      name: "Page B",
-      uv: 3000,
-      pv: 1398,
-      amt: 2210
-    },
-    {
-      name: "Page C",
-      uv: 2000,
-      pv: 9800,
-      amt: 2290
-    },
-    {
-      name: "Page D",
-      uv: 2780,
-      pv: 3908,
-      amt: 2000
-    },
-    {
-      name: "Page E",
-      uv: 1890,
-      pv: 4800,
-      amt: 2181
-    },
-    {
-      name: "Page F",
-      uv: 2390,
-      pv: 3800,
-      amt: 2500
-    },
-    {
-      name: "Page G",
-      uv: 3490,
-      pv: 4300,
-      amt: 2100
-    }
-]
 const subscribersGained = {
     chart: {
       id: "subscribers",
@@ -127,10 +96,7 @@ const subscribersGained = {
       x: { show: false }
     }
 }
-const data1 = [
-    { name: "Group A", value: 500 },
-    { name: "Group B", value: 100 },
-]
+
 const RADIAN = Math.PI / 180
 const renderCustomizedLabel = ({
   cx,
@@ -167,41 +133,157 @@ class Dashboard extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            basicPicker : new Date(),
             posts : {},
-            loading : false
+            loading : false,
+            filter : {
+                sotsialset : '',
+                from_date : '2021-12-13',
+                to_date : '2021-12-30',
+            },
+            data : [
+                {
+                  date: "Page A",
+                  views: 4000,
+                  pv: 2400,
+                  amt: 2400
+                },
+                {
+                  date: "Page B",
+                  views: 3000,
+                  pv: 1398,
+                  amt: 2210
+                },
+                {
+                  date: "Page C",
+                  views: 2000,
+                  pv: 9800,
+                  amt: 2290
+                },
+                {
+                  date: "Page D",
+                  views: 2780,
+                  pv: 3908,
+                  amt: 2000
+                },
+                {
+                  date: "Page E",
+                  views: 1890,
+                  pv: 4800,
+                  amt: 2181
+                },
+                {
+                  date: "Page F",
+                  views: 2390,
+                  pv: 3800,
+                  amt: 2500
+                },
+                {
+                  date: "Page G",
+                  views: 3490,
+                  pv: 4300,
+                  amt: 2100
+                }
+            ],
+            FollowersList : [],
+            CommentList : [],
+            Likes : [],
+            data1 : [
+                { name: "Group A", value: 500 },
+                { name: "Group B", value: 100 },
+            ]
         }
     }
     componentDidMount(){
-        this.Refresh()
-        console.log(this.props)
+        this.Refresh(this.props.oblastid)
     }
-    Refresh = () => {
+    componentWillReceiveProps = (nextProps) => {
+        if(nextProps.oblastid != this.props.oblastid){
+            this.Refresh(nextProps.oblastid)
+        }
+    }
+    Refresh = (id) => {
+        const { filter } = this.state
         this.setState({ loading : true })
-        DashboardService.Posts().then(res => {
+        DashboardService.Posts(id,filter.sotsialset,filter.from_date,filter.to_date || '').then(res => {
             this.setState({ posts : res.data })
             this.setState({ loading : false })
         }).catch(error => {
             toast.error(error.response.data.error)
             this.setState({ loading : false })
         })
+        this.setState({ loading : true })
+        DashboardService.StaticListData(id,filter.sotsialset,filter.from_date,filter.to_date || '').then(res => {
+            
+            var commentlist = [
+                {
+                    name : 'Comments',
+                    data : res.data.data.map(item => item.comments)
+                }
+            ]
+            var followers = [
+                {
+                    name : 'Followers',
+                    data : res.data.data.map(item => item.fallowers)
+                }
+            ]
+            var likes = [
+                {
+                    name : 'Likes',
+                    data : res.data.data.map(item => item.likes)
+                }
+            ]
+            this.setState({ data : res.data.data,FollowersList : followers,CommentList : commentlist,Likes : likes })
+            this.setState({ loading : false })
+        }).catch(error => {
+            toast.error(error.response.data.error)
+            this.setState({ loading : false })
+        })
+    }
+    NewPost = () => {
+        const { filter } = this.state
+        this.setState({ loading : true })
+        DashboardService.StaticOrganPostData(filter.sotsialset,filter.from_date,filter.to_date || '').then(res => {
+            var data1 = [
+                { name : 'Posted',value : res.data.posted },
+                { name : 'Noposted',value : res.data.noposted }
+            ]
+            this.setState({ data1 : data1 })
+        }).catch(error => {
+            toast.error(error.response.data.error)
+            this.setState({ loading : false })
+        })
+    }
+    SocialRefresh = (param) => {
+        const { filter } = this.state
+        filter.sotsialset = param
+        this.setState({ filter : filter },() => {
+            this.Refresh(this.props.oblastid)
+            this.NewPost()
+        })
+    }
+    ChangeDate = (date) => {
+        var { filter } = this.state
+        filter.from_date = moment(date[0]).format("YYYY-MM-DD")
+        filter.to_date = moment(new Date(date[1])).format("YYYY-MM-DD")
+        this.setState({ filter : filter },() => this.Refresh(this.props.oblastid))
     }
     render(){
-        const { basicPicker,posts,loading } = this.state
-        const { parseNumber } = NumbertoThousand
+        const { posts,loading,filter,data,CommentList,FollowersList,Likes,data1 } = this.state
+        const { intl } = this.props
         return(
                 <Overlay show={loading}>
                     <Card>
                     <Row>
                         <Col className="py-3 px-3">
-                            <span onClick={() => this.Refresh()} className="p-2 bg-gradient-success text-white rounded mr-2 cursor-pointer" id="Globe"> <Globe  size={22} /> </span>
-                            <span className="p-2 bg-gradient-info text-white rounded mr-2 cursor-pointer"> <Navigation size={22} /> </span>
-                            <span className="p-2 bg-gradient-primary text-white rounded mr-2 cursor-pointer"> <Facebook size={22} /> </span>
-                            <span className="p-2 bg-gradient-danger text-white rounded mr-2 cursor-pointer"> <Instagram size={22} /> </span>
-                            <span className="p-2 bg-gradient-danger text-white rounded mr-2 cursor-pointer"> <Youtube size={22} /> </span>
-                            <span className="p-2 bg-gradient-info text-white rounded mr-2 cursor-pointer"> <Twitter size={22} /> </span>
-                            <span className="p-2 bg-gradient-dark text-white rounded mr-2 cursor-pointer"> <Twitter size={22} /> </span>
-                            <span className="p-2 bg-gradient-dark text-white rounded cursor-pointer"> <Twitter size={22} /> </span> 
+                            <Button.Ripple outline={filter.sotsialset != ''} color="primary" onClick={() => this.SocialRefresh('')} className="p-2 rounded mr-2 cursor-pointer" id="Grid"> <Grid  size={22} /> </Button.Ripple>
+                            <Button.Ripple outline color="primary" onClick={() => this.Refresh(this.props.oblastid)} className="p-2 rounded mr-2 cursor-pointer" id="Globe"> <Globe  size={22} /> </Button.Ripple>
+                            <Button.Ripple outline color="primary" className="p-2 rounded mr-2 cursor-pointer"> <Navigation size={22} /> </Button.Ripple>
+                            <Button.Ripple outline={filter.sotsialset != 'fb_page'} color="primary" onClick={() => this.SocialRefresh('fb_page')} className="p-2  rounded mr-2 cursor-pointer"> <Facebook size={22} /> </Button.Ripple>
+                            <Button.Ripple outline={filter.sotsialset != 'instagram_new'} color="primary" onClick={() => this.SocialRefresh('instagram_new')} className="p-2  rounded mr-2 cursor-pointer"> <Instagram size={22} /> </Button.Ripple>
+                            <Button.Ripple outline color="primary" className="p-2 rounded mr-2 cursor-pointer"> <Youtube size={22} /> </Button.Ripple>
+                            <Button.Ripple outline color="primary" className="p-2 rounded mr-2 cursor-pointer"> <Twitter size={22} /> </Button.Ripple>
+                            {/* <span className="p-2 bg-gradient-dark text-white rounded mr-2 cursor-pointer"> <Twitter size={22} /> </span>
+                            <span className="p-2 bg-gradient-dark text-white rounded cursor-pointer"> <Twitter size={22} /> </span>  */}
                             <UncontrolledTooltip
                                 placement="top"
                                 target="Globe"
@@ -210,12 +292,31 @@ class Dashboard extends React.Component{
                             </UncontrolledTooltip>
                         </Col>
                         <Col className="d-flex align-items-center justify-content-end">
-                            <Flatpickr
+                            {/* <Flatpickr
                                 className="form-control w-25 mr-2"
                                 options={{  mode: "range"  }}
                                 value={basicPicker}
                                 onChange={date => {
                                     this.setState({ basicPicker : date })
+                                }}
+                            /> */}
+                            <Flatpickr
+                                className="form-control w-25 mr-2"
+                                value={[filter.from_date,filter.to_date]}
+                                placeholder={t2("filterdate", intl)}
+                                options={{
+                                dateFormat: "Y.m.d",
+                                mode: "range",
+                                locale:
+                                    intl.locale == "ru"
+                                    ? Russian
+                                    : intl.locale == "cl"
+                                    ? Uzbek
+                                    : UzbekLatin,
+                                }}
+                                onChange={(date) => {
+                                    this.ChangeDate(date)
+                                    this.NewPost()
                                 }}
                             />
                         </Col>
@@ -236,7 +337,7 @@ class Dashboard extends React.Component{
                             hideChart
                             iconBg="primary"
                             icon={<Eye className="primary" size={22} />}
-                            stat={parseNumber(posts.views)}
+                            stat={parseNumber(posts.views,0)}
                             statTitle="Views"
                         />
                     </Col>
@@ -288,7 +389,7 @@ class Dashboard extends React.Component{
                                 <CardTitle>Line Chart</CardTitle>
                             </CardHeader>
                             <CardBody>
-                                <UzbMap height={300} />
+                                <UzbMap oblastid={this.props.oblastid} height={300} />
                             </CardBody>
                         </Card>
                     </Col>
@@ -312,21 +413,21 @@ class Dashboard extends React.Component{
                                             }}
                                         >
                                             <CartesianGrid strokeDasharray="3 3" />
-                                            <XAxis dataKey="name" />
+                                            <XAxis dataKey="date" />
                                             <YAxis />
                                             <Tooltip />
                                             <Legend />
                                             <Line
                                                 type="monotone"
-                                                dataKey="pv"
+                                                dataKey="views"
                                                 stroke="#7367F0"
                                                 activeDot={{ r: 8 }}
                                             />
-                                            <Line
+                                            {/* <Line
                                                 type="monotone"
                                                 dataKey="uv"
                                                 stroke="#28C76F"
-                                            />
+                                            /> */}
                                         </LineChart>
                                     </ResponsiveContainer>
                                 </div>
@@ -370,32 +471,36 @@ class Dashboard extends React.Component{
                         <Card className="pt-1" style={{ paddingBottom : '9px' }}>
                             <StatisticsCard
                                 icon={<Users className="primary" size={22} />}
-                                stat="92.6k"
-                                statTitle="Subscribers Gained"
+                                stat={parseNumber(posts.fallowers)}
+                                statTitle="Users"
                                 options={subscribersGained}
-                                series={subscribersGainedSeries}
+                                series={FollowersList}
                                 type="area"
                             />
                         </Card>
                     </Col>
                     <Col sm="12" md="6" lg="3">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Line Chart</CardTitle>
-                            </CardHeader>
-                            <CardBody>
-                                3
-                            </CardBody>
+                        <Card className="pt-1" style={{ paddingBottom : '9px' }}>
+                            <StatisticsCard
+                                icon={<MessageSquare className="primary" size={22} />}
+                                stat={parseNumber(posts.comments)}
+                                statTitle="Comments"
+                                options={subscribersGained}
+                                series={CommentList}
+                                type="area"
+                            />
                         </Card>
                     </Col>
                     <Col sm="12" md="6" lg="3">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Line Chart</CardTitle>
-                            </CardHeader>
-                            <CardBody>
-                                4
-                            </CardBody>
+                        <Card className="pt-1" style={{ paddingBottom : '9px' }}>
+                            <StatisticsCard
+                                icon={<Heart className="primary" size={22} />}
+                                stat={parseNumber(posts.likes)}
+                                statTitle="Likes"
+                                options={subscribersGained}
+                                series={Likes}
+                                type="area"
+                            />
                         </Card>
                     </Col>
                 </Row>
@@ -403,4 +508,9 @@ class Dashboard extends React.Component{
         )
     }
 }
-export default Dashboard
+const mapStateToProps = state => {
+    return {
+      oblastid : state.oblastAction.oblastid
+    }
+}
+export default injectIntl(connect(mapStateToProps)(Dashboard))
