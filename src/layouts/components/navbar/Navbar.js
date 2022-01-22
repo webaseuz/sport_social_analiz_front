@@ -40,12 +40,14 @@ const ThemeNavbar = props => {
   const setOblast = (item) => {
     
     setOblastid(item.id)
-    props.oblastAction(item.id)
+    props.oblastAction(item.oblastid)
     console.log(props)
   }
   useEffect(() => {
     DashboardService.OblastList().then(res => {
       setOblastlist(res.data.data)
+      setOblastid(res.data.data[0].id)
+      props.oblastAction(res.data.data[0].oblastid)
     })
   },[])
   return (

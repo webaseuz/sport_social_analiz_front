@@ -1,5 +1,12 @@
 {
-  "Dashboard": "Dashboard",
+  "Dashboard": "Bosh menyu",
+  "SpeсService" : "Пресс-службы",
+  "Rate" : "Оценка",
+  "Top" : "TOP 10",
+  "no" : "Yo'q",
+  "yes" : "Ha",
+
+
   "Analytics": "Analytics",
   "Apps": "Apps",
   "eCommerce": "eCommerce",

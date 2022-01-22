@@ -243,9 +243,9 @@ class NavbarUser extends React.PureComponent {
         <IntlContext.Consumer>
           {context => {
             let langArr = {
-              "ln" : "Uzbek Latn",
-              "cl" : "Uzbek Cyrl",
-              "ru" : "Russian"
+              "ln" : "O'zbek tili",
+              "cl" : "Ўзбек тили",
+              "ru" : "Русский язык"
               // "pt" : "Portuguese"
             }
             return (
@@ -269,19 +269,19 @@ class NavbarUser extends React.PureComponent {
                     tag="a"
                     onClick={e => context.switchLanguage("ln")}
                   >
-                    <span className="ml-1">Uzbek Latn</span>
+                    <span className="ml-1">O'zbek tili</span>
                   </DropdownItem>
                   <DropdownItem
                     tag="a"
                     onClick={e => context.switchLanguage("cl")}
                   >
-                    <span className="ml-1">Uzbek Cyrl</span>
+                    <span className="ml-1">Ўзбек тили</span>
                   </DropdownItem>
                   <DropdownItem
                     tag="a"
                     onClick={e => context.switchLanguage("ru")}
                   >
-                    <span className="ml-1">Russian</span>
+                    <span className="ml-1"> Русский язык </span>
                   </DropdownItem>
                   {/* <DropdownItem
                     tag="a"

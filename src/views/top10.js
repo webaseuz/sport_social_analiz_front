@@ -22,7 +22,9 @@ class  Top10 extends React.Component {
             RateModal : "",
             RateList : [],
             selectedRate : '',
-            top10List : []
+            top10List : [],
+            top10Col : [],
+            top10Cel : []
         }
     }
     componentDidMount(){
@@ -35,18 +37,11 @@ class  Top10 extends React.Component {
         var { filter } = this.state
         
         Top10Service.top10().then(res => {
-            this.setState({ top10List : res.data.top10 })
-        })
-    }
-    Rate = (item) => {
-        const { selectedRate,RateList,RateModal } = this.state
-        SpecService.LevelOrganizationViews(selectedRate,item.organization_id).then(res => {
-            toast.success("Успешно !!")
-            this.setState({ RateModal : false })
+            this.setState({ top10List : res.data.data,top10Col : res.data.cols,top10Cel : res.data.cells })
         })
     }
     render(){
-        const { RateModal,selectedRate,RateList,top10List } = this.state
+        const { RateModal,selectedRate,RateList,top10List,top10Col,top10Cel } = this.state
         const { intl } = this.props
         return(
             <div>
@@ -79,10 +74,10 @@ class  Top10 extends React.Component {
                         <Row className="mt-3">
                             <Col>
                                 <Table striped responsive borderless>
-                                    <thead>
+                                    <thead className='text-center'>
                                         <tr>
                                             {/* <th style={{ verticalAlign:'middle' }} rowSpan="2" className="bg-primary text-white"> № </th> */}
-                                            <th style={{ verticalAlign:'middle' }}  rowSpan="2" className="bg-primary text-white"> SpesService </th>
+                                            <th style={{ verticalAlign:'middle' }}  rowSpan="2" className="bg-primary text-white"> Дата </th>
                                             <th colSpan="2" className="text-center bg-primary text-white"> Web-sayt </th>
                                             <th colSpan="2" className="text-center bg-primary text-white"> Telegram </th>
                                             <th colSpan="2" className="text-center bg-primary text-white"> Facebook </th>
@@ -91,37 +86,33 @@ class  Top10 extends React.Component {
                                             <th colSpan="2" className="text-center bg-primary text-white"> Twitter </th>
                                             <th colSpan="2" className="text-center bg-primary text-white"> Tiktok </th>
                                             <th colSpan="2" className="text-center bg-primary text-white"> Teletype </th>
-                                            {/* <th colSpan="2" className="text-center bg-primary text-white"> Others </th> */}
-                                            <th style={{ verticalAlign:'middle' }} rowSpan="2" className="bg-primary text-white"> Rate </th>
-                                            <th style={{ verticalAlign:'middle' }} rowSpan="2" className="bg-primary text-white"> Actions </th>
                                         </tr>
                                         <tr className="bg-primary text-white">
                                             <th className="bg-primary text-white"> Post </th>
                                             <th> comments </th>
                                             <th> Post </th>
-                                            <th> Prosmotr </th>
+                                            <th> Просмотр </th>
                                             <th> Post </th>
                                             <th> Likes </th>
                                             <th> Post </th>
                                             <th> Likes </th>
                                             <th> Post </th>
-                                            <th> Prosmotr </th>
+                                            <th> Просмотр </th>
                                             <th> Post </th>
                                             <th> Likes </th>
                                             <th> Post </th>
-                                            <th> Prosmotr </th>
+                                            <th> Просмотр </th>
                                             <th> Post </th>
-                                            <th> Prosmotr </th>
+                                            <th> Просмотр </th>
                                             {/* <th> Post </th>
                                             <th> Prosmotr </th> */}
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody className='text-center'>
                                         {
                                             top10List?.map((item,index) => (
                                                 <tr key={index}>
-                                                    {/* <th>1</th> */}
-                                                    <th> { item.name } </th>
+                                                    <th> { item.date } </th>
                                                     <th>{ item.web_site_posts }</th>
                                                     <th>{ item.web_site_comments }</th>
                                                     <th>{ item.telegram_posts }</th>
@@ -138,44 +129,6 @@ class  Top10 extends React.Component {
                                                     <th>{ item.tik_tok_views }</th>
                                                     <th>{ item.teletype_posts }</th>
                                                     <th>{ item.teletype_views }</th>
-                                                    {/* <th>{ item.name }</th>
-                                                    <th>{ item.name }</th> */}
-                                                    <th><Badge color="light-primary"> { item.rate } </Badge></th>
-                                                    <th> <Button size='sm' onClick={() => this.setState({ RateModal : "RateModal" + item.organization_id })} color="primary"> Оценить </Button> </th>
-                                                    <Modal isOpen={RateModal == "RateModal" + item.organization_id}>
-                                                        <ModalHeader toggle={() => this.setState({ RateModal : "RateModal" })}>
-                                                        {t2("Rate", intl)}
-                                                        </ModalHeader>
-                                                        <ModalBody>
-                                                            <Row>
-                                                                {
-                                                                    RateList.map((item,index) => (
-                                                                        <Col sm="12" md="4" key={index}>
-                                                                            <Button.Ripple block outline={selectedRate != item.id} color={item.id == 1 ? 'success' : item.id == 2 ? 'warning' : 'danger'} onClick={() => this.setState({ selectedRate : item.id })} className="roundedcursor-pointer w-100"> { item.name_cryl } </Button.Ripple>
-                                                                        </Col>
-                                                                    ))
-                                                                }
-                                                                
-                                                                {/* <Col sm="12" md="4">
-                                                                    <Button.Ripple block outline={selectedRate != 2} color="warning" onClick={() => this.setState({ selectedRate : 2 })} className="rounded cursor-pointer w-100"> нормально </Button.Ripple>
-                                                                </Col>
-                                                                <Col sm="12" md="4">
-                                                                    <Button.Ripple block outline={selectedRate != 3} color="success" onClick={() => this.setState({ selectedRate : 3 })} className="rounded cursor-pointer w-100"> отличьно </Button.Ripple>
-                                                                </Col> */}
-                                                            </Row>
-                                                        </ModalBody>
-                                                        <ModalFooter>
-                                                        <Button
-                                                            color="danger"
-                                                            onClick={() => this.setState({ RateModal : "RateModal" })}
-                                                        >
-                                                            {t2("no", intl)}
-                                                        </Button>{" "}
-                                                        <Button color="success" onClick={() => this.Rate(item)}>
-                                                            {t2("yes", intl)}
-                                                        </Button>{" "}
-                                                        </ModalFooter>
-                                                    </Modal>
                                                 </tr>
                                                 
                                             ))

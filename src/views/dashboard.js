@@ -211,7 +211,7 @@ class Dashboard extends React.Component{
             toast.error(error.response.data.error)
             this.setState({ loading : false })
         })
-        this.setState({ loading : true })
+        // this.setState({ loading : true })
         DashboardService.StaticListData(id,filter.sotsialset,filter.from_date,filter.to_date || '').then(res => {
             
             var commentlist = [
@@ -233,10 +233,10 @@ class Dashboard extends React.Component{
                 }
             ]
             this.setState({ data : res.data.data,FollowersList : followers,CommentList : commentlist,Likes : likes })
-            this.setState({ loading : false })
+            // this.setState({ loading : false })
         }).catch(error => {
             toast.error(error.response.data.error)
-            this.setState({ loading : false })
+            // this.setState({ loading : false })
         })
     }
     NewPost = () => {
@@ -276,12 +276,12 @@ class Dashboard extends React.Component{
                     <Row>
                         <Col className="py-3 px-3">
                             <Button.Ripple outline={filter.sotsialset != ''} color="primary" onClick={() => this.SocialRefresh('')} className="p-2 rounded mr-2 cursor-pointer" id="Grid"> <Grid  size={22} /> </Button.Ripple>
-                            <Button.Ripple outline color="primary" onClick={() => this.Refresh(this.props.oblastid)} className="p-2 rounded mr-2 cursor-pointer" id="Globe"> <Globe  size={22} /> </Button.Ripple>
-                            <Button.Ripple outline color="primary" className="p-2 rounded mr-2 cursor-pointer"> <Navigation size={22} /> </Button.Ripple>
+                            <Button.Ripple outline color="danger" disabled className="p-2 rounded mr-2 cursor-pointer" id="Globe"> <Globe  size={22} /> </Button.Ripple>
+                            <Button.Ripple outline color="danger" disabled className="p-2 rounded mr-2 cursor-pointer"> <Navigation size={22} /> </Button.Ripple>
                             <Button.Ripple outline={filter.sotsialset != 'fb_page'} color="primary" onClick={() => this.SocialRefresh('fb_page')} className="p-2  rounded mr-2 cursor-pointer"> <Facebook size={22} /> </Button.Ripple>
                             <Button.Ripple outline={filter.sotsialset != 'instagram_new'} color="primary" onClick={() => this.SocialRefresh('instagram_new')} className="p-2  rounded mr-2 cursor-pointer"> <Instagram size={22} /> </Button.Ripple>
-                            <Button.Ripple outline color="primary" className="p-2 rounded mr-2 cursor-pointer"> <Youtube size={22} /> </Button.Ripple>
-                            <Button.Ripple outline color="primary" className="p-2 rounded mr-2 cursor-pointer"> <Twitter size={22} /> </Button.Ripple>
+                            <Button.Ripple outline color="danger" disabled className="p-2 rounded mr-2 cursor-pointer"> <Youtube size={22} /> </Button.Ripple>
+                            <Button.Ripple outline color="danger" disabled className="p-2 rounded mr-2 cursor-pointer"> <Twitter size={22} /> </Button.Ripple>
                             {/* <span className="p-2 bg-gradient-dark text-white rounded mr-2 cursor-pointer"> <Twitter size={22} /> </span>
                             <span className="p-2 bg-gradient-dark text-white rounded cursor-pointer"> <Twitter size={22} /> </span>  */}
                             <UncontrolledTooltip
@@ -329,7 +329,7 @@ class Dashboard extends React.Component{
                             iconBg="warning"
                             icon={<Edit className="warning" size={22} />}
                             stat={parseNumber(posts.posts,0)}
-                            statTitle="Posts"
+                            statTitle="Публикаций"
                         />
                     </Col>
                     <Col xl="2" lg="4" sm="6">
@@ -338,7 +338,7 @@ class Dashboard extends React.Component{
                             iconBg="primary"
                             icon={<Eye className="primary" size={22} />}
                             stat={parseNumber(posts.views,0)}
-                            statTitle="Views"
+                            statTitle="Просмотров"
                         />
                     </Col>
                     <Col xl="2" lg="4" sm="6">
@@ -347,7 +347,7 @@ class Dashboard extends React.Component{
                             iconBg="danger"
                             icon={<Heart className="danger" size={22} />}
                             stat={parseNumber(posts.likes)}
-                            statTitle="Favourited"
+                            statTitle="Лайков"
                         />
                     </Col>
                     <Col xl="2" lg="4" sm="6">
@@ -356,7 +356,7 @@ class Dashboard extends React.Component{
                             iconBg="warning"
                             icon={<Repeat className="warning" size={22} />}
                             stat={parseNumber(posts.reposts)}
-                            statTitle="Repost"
+                            statTitle="Репостов"
                         />
                     </Col>
                     <Col xl="2" lg="4" sm="6">
@@ -365,7 +365,7 @@ class Dashboard extends React.Component{
                             iconBg="success"
                             icon={<MessageSquare className="success" size={22} />}
                             stat={parseNumber(posts.comments)}
-                            statTitle="Comments"
+                            statTitle="Комментариев"
                         />
                     </Col>
                 
@@ -376,7 +376,7 @@ class Dashboard extends React.Component{
                             iconBg="success"
                             icon={<Smile className="success" size={22} />}
                             stat={parseNumber(posts.fallowers)}
-                            statTitle="Followers"
+                            statTitle="Подписчиков"
                         />
                     </Col>
 
@@ -386,7 +386,7 @@ class Dashboard extends React.Component{
                     <Col sm="12" md="4">
                         <Card>
                             <CardHeader>
-                                <CardTitle>Line Chart</CardTitle>
+                                <CardTitle>Информация в разрезе регионов</CardTitle>
                             </CardHeader>
                             <CardBody>
                                 <UzbMap oblastid={this.props.oblastid} height={300} />
@@ -396,7 +396,7 @@ class Dashboard extends React.Component{
                     <Col sm="12" md="8">
                         <Card>
                             <CardHeader>
-                                <CardTitle>Line Chart</CardTitle>
+                                <CardTitle> Динамика показателей за период </CardTitle>
                             </CardHeader>
                             <CardBody style={{ width : '100%',height : '300px !important' }}>
                                 <div className="recharts-wrapper" style={{ height : '300px' }}>
@@ -422,6 +422,8 @@ class Dashboard extends React.Component{
                                                 dataKey="views"
                                                 stroke="#7367F0"
                                                 activeDot={{ r: 8 }}
+                                                labelLine="Кол-во"
+                                                dataLabel="views"
                                             />
                                             {/* <Line
                                                 type="monotone"
@@ -440,7 +442,7 @@ class Dashboard extends React.Component{
                     <Col sm="12" md="6" lg="3">
                         <Card>
                             <CardHeader>
-                                <CardTitle>Line Chart</CardTitle>
+                                <CardTitle> Выставленные публикации </CardTitle>
                             </CardHeader>
                             <CardBody>
                                 <div className="recharts-wrapper" style={{ width:'100%',height : '200px' }}>
@@ -472,7 +474,7 @@ class Dashboard extends React.Component{
                             <StatisticsCard
                                 icon={<Users className="primary" size={22} />}
                                 stat={parseNumber(posts.fallowers)}
-                                statTitle="Users"
+                                statTitle="Количество подписчиков"
                                 options={subscribersGained}
                                 series={FollowersList}
                                 type="area"
@@ -484,7 +486,7 @@ class Dashboard extends React.Component{
                             <StatisticsCard
                                 icon={<MessageSquare className="primary" size={22} />}
                                 stat={parseNumber(posts.comments)}
-                                statTitle="Comments"
+                                statTitle="Количество комментариев"
                                 options={subscribersGained}
                                 series={CommentList}
                                 type="area"
@@ -496,7 +498,7 @@ class Dashboard extends React.Component{
                             <StatisticsCard
                                 icon={<Heart className="primary" size={22} />}
                                 stat={parseNumber(posts.likes)}
-                                statTitle="Likes"
+                                statTitle="Количество лайков"
                                 options={subscribersGained}
                                 series={Likes}
                                 type="area"

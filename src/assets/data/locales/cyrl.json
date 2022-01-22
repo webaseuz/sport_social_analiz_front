@@ -1,5 +1,14 @@
 {
-  "Dashboard": "Instrumententafel",
+  "Dashboard": "Бош меню",
+  "SpeсService" : "Пресс-службы",
+  "Rate" : "Оценка",
+  "Top" : "TOP 10",
+  "no" : "Йўқ",
+  "yes" : "Ҳа",
+  
+  
+  
+  
   "Analytics": "Analytics",
   "eCommerce": "eCommerce",
   "Apps": "Apps",

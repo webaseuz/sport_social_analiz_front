@@ -1,5 +1,13 @@
 {
-  "Dashboard": "Tableau de bord",
+  "Dashboard": "Главное меню",
+  "SpecService" : "Пресс-службы",
+  "Rate" : "Оценка",
+  "Top" : "TOP 10",
+  "no" : "Нет",
+  "yes" : "Да",
+
+
+
   "Analytics": "Analytique",
   "Apps": "applications",
   "eCommerce": "commerce électronique",

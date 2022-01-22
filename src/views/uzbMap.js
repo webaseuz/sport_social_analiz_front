@@ -2,7 +2,25 @@ import React from 'react'
 const uzbMap = (props) => {
     return(
         <div style={{ position : 'relative' }}>
-            <span style={{ position : 'absolute',bottom : 20,left : 0,fontWeight : 'bold',fontSize : 24 }}> Buxoro </span>
+            <span style={{ position : 'absolute',bottom : 20,left : 0,fontWeight : 'bold',fontSize : 24 }}>
+              {
+                props.oblastid == 3 ? 'Андижон' :
+                props.oblastid == 4 ? 'Бухоро' : 
+                props.oblastid == 13 ? 'Фарғона' : 
+                props.oblastid == 5 ? 'Жиззах' : 
+                props.oblastid == 9 ? 'Наманган' : 
+                props.oblastid == 8 ? 'Навоий' : 
+                props.oblastid == 7 ? 'Қашқадарё' : 
+                props.oblastid == 6 ? 'Қорақалпоғистон' :
+                props.oblastid == 10 ? "Самарқанд" : 
+                props.oblastid == 12 ? "Сирдарё" : 
+                props.oblastid == 11 ? "Сурхондарё" : 
+                props.oblastid == 1 ? "Тошкент шаҳри" :
+                props.oblastid == 2 ? "Тошкент вилояти" :
+                props.oblastid == 14 ? "Хоразм" :
+                ""
+              }
+            </span>
             <svg
             xmlnsMapsvg="http://mapsvg.com"
             xmlnsDc="http://purl.org/dc/elements/1.1/"
