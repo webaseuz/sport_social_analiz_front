@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row,Col,Modal,Card,CardBody,Table,Badge,Button,ModalHeader,ModalBody,ModalFooter,ButtonGroup } from 'reactstrap'
+import { Row,Col,Modal,Card,CardBody,Table,Badge,Button,ModalHeader,ModalBody,ModalFooter,ButtonGroup,ListGroup,ListGroupItem } from 'reactstrap'
 import { ChevronDown,Filter,Printer } from 'react-feather'
 import SpecService from '../services/spesservice.service'
 import { toast } from "react-toastify"
@@ -35,7 +35,7 @@ class  Rate extends React.Component {
                   {
                     label: "My First dataset",
                     data: [],
-                    backgroundColor: ['red','yellow','green']
+                    backgroundColor: ['green','red','yellow']
                   }
                 ]
             },
@@ -48,24 +48,40 @@ class  Rate extends React.Component {
                     text: "Статистика"
                 }
             },
-            LevelList : []
+            LevelList : [],
+            MiddleCountList : []
         }
     }
     componentDidMount(){
         this.Refresh()
         SpesService.levelName().then(res => {
             this.setState({ LevelList : res.data })
-            const { data,LevelList } = this.state
+            const { data,LevelList,MiddleCountList } = this.state
             data.labels = LevelList.map(item => item.name_ru)
-            data.datasets[0].data = [0,1,5]
+            
+            console.log(data,MiddleCountList)
         })
+        
     }
     Refresh = () => {
-        var { filter } = this.state
+        var { filter,MiddleCountList,data } = this.state
         this.setState({ loading : true })
         RateService.levelOrg(filter.timetype).then(res => {
-            this.setState({ RateList : res.data.rows,RateColList : res.data.cols,RateCellList : res.data.cells,RateMiddle : res.data.middle,loading : false })
+            data.datasets[0].data = [
+                res.data.middle_count.filter(el => el.name == 'отлично')[0]?.rows.length || 0,
+                res.data.middle_count.filter(el => el.name == 'плохо')[0]?.rows.length || 0,
+                res.data.middle_count.filter(el => el.name == 'нормально')[0]?.rows.length || 0
+            ]
+            this.setState({ 
+                RateList : res.data.rows,
+                RateColList : res.data.cols,
+                RateCellList : res.data.cells,
+                RateMiddle : res.data.middle,
+                MiddleCountList : res.data.middle_count,
+                loading : false 
+            })
         })
+        console.log(MiddleCountList)
     }
     ChangeTime = (type) => {
         var { filter } = this.state
@@ -74,7 +90,7 @@ class  Rate extends React.Component {
         this.Refresh()
     }
     render(){
-        const { RateList,RateColList,RateCellList,RateMiddle,filter,loading,data,options } = this.state
+        const { RateList,RateColList,RateCellList,RateMiddle,filter,loading,data,options,LevelList,MiddleCountList } = this.state
         const { intl } = this.props
         return(
             <div>
@@ -118,10 +134,12 @@ class  Rate extends React.Component {
                                                         <th> { item.name } </th>
                                                         {   
                                                             RateColList?.map((el,i) => (
-                                                                <th key={i + 'col2'} className="text-center"> <Badge color="light-primary"> { RateCellList[item.id][el.id] || '-' } </Badge>  </th>
+                                                                <th key={i + 'col2'} className="text-center"> 
+                                                                    <Badge color={RateCellList[item.id][el.id] == 'отлично' ? "light-success" : RateCellList[item.id][el.id] == 'нормально' ? 'light-warning' : 'light-danger'}> { RateCellList[item.id][el.id] || '-' } </Badge>  
+                                                                </th>
                                                             ))
                                                         }
-                                                        <th> <Badge color="light-primary"> { RateMiddle[item.id] || '-'} </Badge>  </th>
+                                                        <th> <Badge color={RateMiddle[item.id] == 'отлично' ? "light-success" : RateMiddle[item.id] == 'нормально' ? 'light-warning' : 'light-danger'}> { RateMiddle[item.id] || '-'} </Badge>  </th>
                                                     </tr>
                                                     
                                                 ))
@@ -137,12 +155,28 @@ class  Rate extends React.Component {
                             <Col sm={12} md={4}>
                                 <Doughnut data={data} options={options} height={300} />
                             </Col>
-                            <Col sm={12} md={6}>
-                                
+                            <Col sm={12} md={8}>
+                                <Row>
+                                    {
+                                        LevelList.map((item,index) => (
+                                            <Col sm={12} md={6} lg={3} className='mt-2 text-center' key={'col' + index}>
+                                                <Badge size="lg" color={item.name_ru == 'отличьно' ? "light-success" : item.name_ru == 'нормально' ? 'light-warning' : 'light-danger'} > { item.name_ru } </Badge>
+                                                <ListGroup className='mt-2'>
+                                                    {
+                                                        MiddleCountList.filter(i => i.name == item.name_ru)[0]?.rows.map((element,ele) => (
+                                                            <ListGroupItem key={'ListGroupItem' + ele}> { element } </ListGroupItem>
+                                                        ))
+                                                    }
+                                                </ListGroup>
+                                            </Col>
+                                        ))
+                                    }
+                                    
+                                </Row>
                             </Col>
-                            <Col sm={12} md={2}>
+                            {/* <Col sm={12} md={2}>
                                 
-                            </Col>
+                            </Col> */}
                         </Row>
                     </CardBody>
                 </Card>

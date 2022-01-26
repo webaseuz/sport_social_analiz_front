@@ -144,7 +144,7 @@ class  SpesService extends React.Component {
                                                         <th>{ item.teletype_views }</th>
                                                         {/* <th>{ item.name }</th>
                                                         <th>{ item.name }</th> */}
-                                                        <th><Badge color="light-primary"> { item.rate } </Badge></th>
+                                                        <th><Badge color={item.rate == 'нормально' ? "light-warning" : item.rate == 'отлично' ? "light-success" : "light-danger"}> { item.rate } </Badge></th>
                                                         <th> <Button size='sm' onClick={() => this.setState({ RateModal : "RateModal" + item.organization_id,selectedRate : '' })} color="primary"> Оценить </Button> </th>
                                                         <Modal isOpen={RateModal == "RateModal" + item.organization_id}>
                                                             <ModalHeader toggle={() => this.setState({ RateModal : "RateModal" })}>

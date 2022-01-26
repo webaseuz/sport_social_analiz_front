@@ -8,6 +8,7 @@ import {
   logoutWithFirebase
 } from "../../../redux/actions/auth/loginActions"
 import oblastAction from '../../../redux/actions/others'
+import IdAction from '../../../redux/actions/Id'
 import NavbarBookmarks from "./NavbarBookmarks"
 import NavbarUser from "./NavbarUser"
 import userImg from "../../../assets/img/portrait/small/avatar-s-11.jpg"
@@ -41,13 +42,14 @@ const ThemeNavbar = props => {
     
     setOblastid(item.id)
     props.oblastAction(item.oblastid)
+    props.IdAction(item.id)
     console.log(props)
   }
   useEffect(() => {
     DashboardService.OblastList().then(res => {
-      setOblastlist(res.data.data)
-      setOblastid(res.data.data[0].id)
-      props.oblastAction(res.data.data[0].oblastid)
+      setOblastlist(res.data)
+      setOblastid(res.data[0]?.id)
+      props.oblastAction(res.data[0]?.oblastid)
     })
   },[])
   return (
@@ -99,14 +101,14 @@ const ThemeNavbar = props => {
                         color="flat-primary"
                         caret
                     >
-                        { oblastlist.length > 0 ? oblastlist.filter(item => item.id == oblastid)[0].fullname_latn : "" }
+                        <b> { oblastlist?.length > 0 ? oblastlist.filter(item => item.id == oblastid)[0]?.full_name : "" } </b>
                         <ChevronDown size={15} />
                     </DropdownToggle>
                     <DropdownMenu>
                       {
-                        oblastlist.length > 0 ?
-                        oblastlist.map((item,index) => (
-                          <DropdownItem active={item.id == oblastid} tag="a" onClick={() => { setOblast(item) }}> { item.fullname_latn } </DropdownItem>
+                        oblastlist?.length > 0 ?
+                        oblastlist?.map((item,index) => (
+                          <DropdownItem active={item.id == oblastid} tag="a" onClick={() => { setOblast(item) }}> { item.full_name } </DropdownItem>
                         ))
                         : <DropdownItem tag="span"> Not found </DropdownItem>
                       }
@@ -151,7 +153,8 @@ const ThemeNavbar = props => {
 const mapStateToProps = state => {
   return {
     user: state.auth,
-    oblastid : state.oblastid
+    oblastid : state.oblastid,
+    id : state.id
   }
 }
 // const mapDispatchToProps = dispatch => {
@@ -163,5 +166,6 @@ export default connect(mapStateToProps, {
   logoutWithJWT,
   logoutWithFirebase,
   useAuth0,
-  oblastAction
+  oblastAction,
+  IdAction
 })(ThemeNavbar)

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card,Row,Col,UncontrolledTooltip,CardHeader, CardTitle, CardBody, Button } from 'reactstrap'
+import { Card,Row,Col,UncontrolledTooltip,CardHeader, CardTitle, CardBody, Button,CustomInput,Table } from 'reactstrap'
 import StatisticsCard from "../components/@vuexy/statisticsCard/StatisticsCard"
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/light.css";
@@ -190,15 +190,17 @@ class Dashboard extends React.Component{
             data1 : [
                 { name: "Group A", value: 500 },
                 { name: "Group B", value: 100 },
-            ]
+            ],
+            canView:{},
+            organizationPostCount : []
         }
     }
     componentDidMount(){
-        this.Refresh(this.props.oblastid)
+        this.Refresh(this.props.id)
     }
     componentWillReceiveProps = (nextProps) => {
-        if(nextProps.oblastid != this.props.oblastid){
-            this.Refresh(nextProps.oblastid)
+        if(nextProps.id != this.props.id){
+            this.Refresh(nextProps.id)
         }
     }
     Refresh = (id) => {
@@ -207,6 +209,12 @@ class Dashboard extends React.Component{
         DashboardService.Posts(id,filter.sotsialset,filter.from_date,filter.to_date || '').then(res => {
             this.setState({ posts : res.data })
             this.setState({ loading : false })
+            DashboardService.SatsialNetwork(id).then(res => {
+                this.setState({ canView : res.data })
+            })
+            DashboardService.OrganizationPostCount(id,filter.from_date,filter.to_date || '').then(res => {
+                this.setState({ organizationPostCount : res.data.data })
+            })
         }).catch(error => {
             toast.error(error.response.data.error)
             this.setState({ loading : false })
@@ -257,7 +265,7 @@ class Dashboard extends React.Component{
         const { filter } = this.state
         filter.sotsialset = param
         this.setState({ filter : filter },() => {
-            this.Refresh(this.props.oblastid)
+            this.Refresh(this.props.id)
             this.NewPost()
         })
     }
@@ -265,31 +273,72 @@ class Dashboard extends React.Component{
         var { filter } = this.state
         filter.from_date = moment(date[0]).format("YYYY-MM-DD")
         filter.to_date = moment(new Date(date[1])).format("YYYY-MM-DD")
-        this.setState({ filter : filter },() => this.Refresh(this.props.oblastid))
+        this.setState({ filter : filter },() => this.Refresh(this.props.id))
     }
     render(){
-        const { posts,loading,filter,data,CommentList,FollowersList,Likes,data1 } = this.state
+        const { posts,loading,filter,data,CommentList,FollowersList,Likes,data1,canView,organizationPostCount } = this.state
         const { intl } = this.props
         return(
                 <Overlay show={loading}>
                     <Card>
                     <Row>
-                        <Col className="py-3 px-3">
+                        <Col className="py-3 px-3 d-flex">
                             <Button.Ripple outline={filter.sotsialset != ''} color="primary" onClick={() => this.SocialRefresh('')} className="p-2 rounded mr-2 cursor-pointer" id="Grid"> <Grid  size={22} /> </Button.Ripple>
-                            <Button.Ripple outline color="danger" disabled className="p-2 rounded mr-2 cursor-pointer" id="Globe"> <Globe  size={22} /> </Button.Ripple>
-                            <Button.Ripple outline color="danger" disabled className="p-2 rounded mr-2 cursor-pointer"> <Navigation size={22} /> </Button.Ripple>
-                            <Button.Ripple outline={filter.sotsialset != 'fb_page'} color="primary" onClick={() => this.SocialRefresh('fb_page')} className="p-2  rounded mr-2 cursor-pointer"> <Facebook size={22} /> </Button.Ripple>
-                            <Button.Ripple outline={filter.sotsialset != 'instagram_new'} color="primary" onClick={() => this.SocialRefresh('instagram_new')} className="p-2  rounded mr-2 cursor-pointer"> <Instagram size={22} /> </Button.Ripple>
-                            <Button.Ripple outline color="danger" disabled className="p-2 rounded mr-2 cursor-pointer"> <Youtube size={22} /> </Button.Ripple>
-                            <Button.Ripple outline color="danger" disabled className="p-2 rounded mr-2 cursor-pointer"> <Twitter size={22} /> </Button.Ripple>
+                            {
+                                canView.web_site ? 
+                                    <div>
+                                        <Button.Ripple outline color="primary" disabled className="p-2 rounded mr-2 cursor-pointer" id="Globe"> <Globe  size={22} /> </Button.Ripple>
+                                        <UncontrolledTooltip
+                                            placement="top"
+                                            target="Globe"
+                                        >
+                                            Hello World !
+                                        </UncontrolledTooltip>
+                                    </div>
+                                : ""
+                            }
+                            {
+                                canView.telegram ? 
+                                    <div>
+                                        <Button.Ripple outline color="primary" disabled className="p-2 rounded mr-2 cursor-pointer"> <Navigation size={22} /> </Button.Ripple>
+                                    </div>
+                                : ""
+                            }
+                            {
+                                canView.fb_page ? 
+                                    <div>
+                                        <Button.Ripple outline={filter.sotsialset != 'fb_page'} color="primary" onClick={() => this.SocialRefresh('fb_page')} className="p-2  rounded mr-2 cursor-pointer"> <Facebook size={22} /> </Button.Ripple>
+                                    </div>
+                                : ""
+                            }
+                            {
+                                canView.instagram_new ? 
+                                    <div>
+                                        <Button.Ripple outline={filter.sotsialset != 'instagram_new'} color="primary" onClick={() => this.SocialRefresh('instagram_new')} className="p-2  rounded mr-2 cursor-pointer"> <Instagram size={22} /> </Button.Ripple>
+                                    </div>
+                                : ""
+                            }
+                            {
+                                canView.youtobe ? 
+                                    <div>
+                                        <Button.Ripple outline={filter.sotsialset != 'youtube'} color="primary" onClick={() => this.SocialRefresh('youtube')} className="p-2 rounded mr-2 cursor-pointer"> <Youtube size={22} /> </Button.Ripple>
+                                    </div>
+                                : ""
+                            }
+                            {
+                                canView.twitter ? 
+                                    <div>
+                                        <Button.Ripple outline color="primary"  className="p-2 rounded mr-2 cursor-pointer"> <Twitter size={22} /> </Button.Ripple>
+                                    </div>
+                                : ""
+                            }
+                            
+                            
+                            
+                            
                             {/* <span className="p-2 bg-gradient-dark text-white rounded mr-2 cursor-pointer"> <Twitter size={22} /> </span>
                             <span className="p-2 bg-gradient-dark text-white rounded cursor-pointer"> <Twitter size={22} /> </span>  */}
-                            <UncontrolledTooltip
-                                placement="top"
-                                target="Globe"
-                            >
-                                Hello World !
-                            </UncontrolledTooltip>
+                            
                         </Col>
                         <Col className="d-flex align-items-center justify-content-end">
                             {/* <Flatpickr
@@ -319,6 +368,54 @@ class Dashboard extends React.Component{
                                     this.NewPost()
                                 }}
                             />
+                            {/* <CustomInput
+                                type='date'
+                                className="form-control w-25 mr-2"
+                            >
+                            </CustomInput>
+                            <CustomInput
+                                type='date'
+                                className="form-control w-25 mr-2"
+                            >
+                            </CustomInput> */}
+                        </Col>
+                    </Row>
+                </Card>
+                <Card>
+                    <Row>
+                        <Col className='mx-1 mt-2'>
+                            <Table striped responsive borderless >
+                                <thead className="bg-primary text-white">
+                                    <tr>
+                                        <th> Показатели </th>
+                                        <th> Web-sayt </th>
+                                        <th> Telegram </th>
+                                        <th> Facebook </th>
+                                        <th> Instagram </th>
+                                        <th> Youtube </th>
+                                        <th> Twitter </th>
+                                        <th> Tiktok </th>
+                                        <th> Teletype </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        organizationPostCount?.map((item,index) => (
+                                            <tr key={index}>
+                                                <th> { item.name } </th>
+                                                <th> { item.web_site } </th>
+                                                <th> { item.telegram } </th>
+                                                <th> { item.fb_page } </th>
+                                                <th> { item.instagram_new } </th>
+                                                <th> { item.youtobe } </th>
+                                                <th> { item.twitter } </th>
+                                                <th> { item.tiktok } </th>
+                                                <th> { item.teletype } </th>
+                                            </tr>
+                                        ))
+                                    }
+                                </tbody>
+                            </Table>
                         </Col>
                     </Row>
                 </Card>
@@ -422,8 +519,7 @@ class Dashboard extends React.Component{
                                                 dataKey="views"
                                                 stroke="#7367F0"
                                                 activeDot={{ r: 8 }}
-                                                labelLine="Кол-во"
-                                                dataLabel="views"
+                                                name="Кол-во"
                                             />
                                             {/* <Line
                                                 type="monotone"
@@ -512,7 +608,8 @@ class Dashboard extends React.Component{
 }
 const mapStateToProps = state => {
     return {
-      oblastid : state.oblastAction.oblastid
+      oblastid : state.oblastAction.oblastid,
+      id : state.IdAction.id
     }
 }
 export default injectIntl(connect(mapStateToProps)(Dashboard))

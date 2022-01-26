@@ -8,6 +8,7 @@ import auth from "./auth/"
 import navbar from "./navbar/Index"
 import dataList from "./data-list/"
 import oblastAction  from "./others"
+import IdAction  from "./Id"
 // import oblastAction from './others'
 const rootReducer = combineReducers({
   calendar: calenderReducer,
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   auth: auth,
   navbar: navbar,
   dataList: dataList,
-  oblastAction : oblastAction
+  oblastAction : oblastAction,
+  IdAction : IdAction
 })
 
 export default rootReducer
