@@ -1,7 +1,30 @@
 <template>
     <div>
         <b-card class="text-right" v-if="!iscomponent">
-            <b-button variant="primary" @click="Create"> <feather-icon icon="PlusIcon"></feather-icon> {{ $t('Add') }} </b-button>
+            <b-row>
+                 <b-col  sm="12" md="6" lg="3">
+            <b-form-input
+              id="basicInput"
+               :placeholder="$t('date_from')"
+              type="date"
+              style="width:100%;margin-right:10px"
+              v-model="filter.date_from"
+            />
+          </b-col>
+           <b-col  sm="12" md="6" lg="3">
+            <b-form-input
+              id="basicInput"
+              :placeholder="$t('date_to')"
+              type="date"
+              style="width:100%;margin-right:10px"
+              v-model="filter.date_to"
+            />
+          </b-col>
+          <b-col>
+               <b-button variant="primary" @click="Create"> <feather-icon icon="PlusIcon"></feather-icon> {{ $t('Add') }} </b-button>
+          </b-col>
+            </b-row>
+           
         </b-card>
         <b-overlay :show="loading">
             <b-card>
@@ -87,6 +110,7 @@
 </template>
 <script>
 import TelevisionService from '@/services/television.service'
+import moment from 'moment'
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 export default{
     props : {
@@ -102,17 +126,16 @@ export default{
             filter : {
                 page : 1,
                 limit : 20,
-                organ : null,
+                // organ : null,
                 satsial : null,
-                date_from : '2022-02-22',
-                date_to : '2022-02-22'
+                date_from : '',
+                date_to : ''
             },
             fields : [
+                { key : 'post_date',label : this.$t('post_date'),tdClass : 'text-left' },
                 { key : 'full_name',label : this.$t('full_name'),tdClass : 'text-left' },
-                { key : 'jurnal',label : this.$t('jurnal'),tdClass : 'text-left' },
-                { key : 'gazeta',label : this.$t('gazeta'),tdClass : 'text-left' },
-                { key : 'radio',label : this.$t('radio'),tdClass : 'text-left' },
-                { key : 'television',label : this.$t('television'),tdClass : 'text-left' },
+                { key : 'content_type',label : this.$t('content_type'),tdClass : 'text-left' },
+                { key : 'content',label : this.$t('content'),tdClass : 'text-left' },
                 { key : !this.iscomponent ? 'actions' : '',label : this.$t('actions')}
             ],
             totalrow : 0,
@@ -121,9 +144,31 @@ export default{
         }
     },
     created(){
+        this.dateType('week')
         this.Refresh()
+
     },
     methods:{
+          dateType(type){
+            var date = new Date();
+            this.filter.date_to = moment(date).format('YYYY-MM-DD')
+            // this.filter.timetype = type
+            if(type == 'day'){
+                this.filter.date_from = this.filter.date_to
+            }
+            if(type == 'week'){
+                date.setDate(date.getDate() - 6);
+                this.filter.date_from = moment(date).format('YYYY-MM-DD')
+            }
+            if(type == 'month'){
+                date.setMonth(date.getMonth() - 1);
+                this.filter.date_from = moment(date).format('YYYY-MM-DD')
+            }
+            if(type == 'year'){
+                date.setFullYear(date.getFullYear() - 1);
+                this.filter.date_from = moment(date).format('YYYY-MM-DD')
+            }
+        },
         onRowSelected(items){
             if(this.iscomponent == true){
                 this.$emit('onRowSelected',items[0])
@@ -139,11 +184,12 @@ export default{
             this.$refs['DeleteModal' + item.id].show()
         },
         Refresh(){
+            const current = new Date();
             this.loading = true
             TelevisionService.GetTelevisionByOrgan(
                 this.filter.page,
                 this.filter.limit,
-                this.filter.organ,
+                // this.filter.organ,
                 this.filter.satsial,
                 this.filter.date_from,
                 this.filter.date_to,

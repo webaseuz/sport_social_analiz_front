@@ -43,18 +43,22 @@
               <p>{{ Television.file_name }}.{{ Television.file_extension }}</p>
               <b-row>
                 <b-col>
-                  <feather-icon
-                    icon="DownloadIcon"
-                    size="17"
-                    class="cursor-pointer"
-                  />
+                  <b-link @click="DownloadFile">
+                    <feather-icon
+                      icon="DownloadIcon"
+                      size="17"
+                      class="cursor-pointer"
+                    />
+                  </b-link>
                 </b-col>
                 <b-col>
-                  <feather-icon
-                    icon="TrashIcon"
-                    size="17"
-                    class="cursor-pointer"
-                  />
+                  <b-link @click="DeleteFile">
+                    <feather-icon
+                      icon="TrashIcon"
+                      size="17"
+                      class="cursor-pointer"
+                    />
+                  </b-link>
                 </b-col>
               </b-row>
             </b-card>
@@ -97,6 +101,8 @@ export default {
       loading: false,
       lang: localStorage.getItem("locale"),
       SaveLoading: false,
+      DeleteLoading: false,
+      DownloadLoading: false,
       file: [],
       url1: [],
       //   files: [],
@@ -149,9 +155,46 @@ export default {
           this.loading = false;
         });
     },
+    DownloadFile() {
+      this.DownloadLoading = true;
+      TelevisionService.DownloadFile(this.Television.file_id)
+        .then((res) => {
+          this.DownloadLoading = false;
+          this.downloadFile(res, this.Television.file_name);
+          this.makeToast(this.$t("SaveSuccess"), "success");
+        })
+        .catch((error) => {
+          this.DownloadLoading = false;
+          this.makeToast(error.response.data, "danger");
+        });
+    },
+    downloadFile(response, item) {
+      var blob = new Blob([response.data]);
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "asdasd"); //or any other extension
+      document.body.appendChild(link);
+      link.click();
+    },
+    DeleteFile() {
+      this.DeleteLoading = true;
+      TelevisionService.DeleteTelevision(this.Television.file_id)
+        .then((res) => {
+          this.DeleteLoading = false;
+          this.makeToast(this.$t("SaveSuccess"), "success");
+          this.Television.file_id = "";
+          this.Television.file_name = "";
+          this.Television.file_extension = "";
+        })
+        .catch((error) => {
+          this.DeleteLoading = false;
+          this.makeToast(error.response.data, "danger");
+        });
+    },
     Update() {
       this.SaveLoading = true;
-      this.Television.organization = 2905;
+      //   this.Television.organization = 2905;
       //    this.Television.post_date=2020-02-22
       TelevisionService.CreateTelevision(this.Television)
         .then((res) => {
