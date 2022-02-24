@@ -95,6 +95,15 @@
   "name" : "Номланиши",
   "organization" : "Ташкилот",
   "date_joined" : "Қўшилган сана",
-  "Logout" : "Чиқиш"
+  "Logout" : "Чиқиш",
+  "jurnal":"Журнал",
+  "gazeta":"Газета",
+  "radio":"Радио",
+  "television":"Телевидения",
+  "post_date":"ОАВда ёритилиш санаси",
+  "content_type":"Контент тури",
+  "content":"Контент",
+  "file":"Файл",
+  "Television": "Телевидения"
 
 }

@@ -94,6 +94,16 @@
   "name" : "Наименование",
   "organization" : "Организация",
   "date_joined" : "Дата присоединения",
-  "Logout" : "Выход"
+  "Logout" : "Выход",
+  "jurnal":"Журнал",
+  "gazeta":"Газета",
+  "radio":"Радио",
+  "television":"Телевидения",
+  "post_date":"Дата освещение в СМИ",
+  "content_type":"Тип контента",
+  "content":"Контент",
+  "file":"Файл",
+  "Television": "Телевидения"
+
 
 }

@@ -215,7 +215,7 @@ export default{
         },
         Delete(item){
             this.DeleteLoading = true
-            TelevisionService.Delete(item.id).then(res  => {
+            TelevisionService.DeleteTelevision(item.id).then(res  => {
                 this.makeToast(this.$t("DeleteSuccess"),'success')
                 this.DeleteLoading = false
                 this.$refs['DeleteModal' + item.id].hide()

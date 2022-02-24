@@ -42,7 +42,7 @@
             <b-card class="styleCard">
               <p>{{ Television.file_name }}.{{ Television.file_extension }}</p>
               <b-row>
-                <b-col>
+                <b-col class="text-center">
                   <b-link @click="DownloadFile">
                     <feather-icon
                       icon="DownloadIcon"
@@ -50,9 +50,15 @@
                       class="cursor-pointer"
                     />
                   </b-link>
-                </b-col>
-                <b-col>
-                  <b-link @click="DeleteFile">
+
+                  <b-link class="ml-1" v-if="this.$route.params.id !=0" @click="DeleteFile">
+                    <feather-icon
+                      icon="TrashIcon"
+                      size="17"
+                      class="cursor-pointer"
+                    />
+                  </b-link>
+                  <b-link class="ml-1" v-if="this.$route.params.id ==0" @click="DeleteFileNew">
                     <feather-icon
                       icon="TrashIcon"
                       size="17"
@@ -132,7 +138,6 @@ export default {
         .catch((error) => {
           this.show = false;
         });
-      this.file = [];
     },
     makeToast(message, variant) {
       this.$toast({
@@ -184,7 +189,22 @@ export default {
         .then((res) => {
           this.DeleteLoading = false;
           this.makeToast(this.$t("SaveSuccess"), "success");
-          this.Television.file_id = "";
+          this.Television.file_id = "" 
+          this.Television.file_name = "";
+          this.Television.file_extension = "";
+        })
+        .catch((error) => {
+          this.DeleteLoading = false;
+          this.makeToast(error.response.data, "danger");
+        });
+    },
+    DeleteFileNew() {
+      this.DeleteLoading = true;
+      TelevisionService.DeleteTelevision(this.Television.file_id)
+        .then((res) => {
+          this.DeleteLoading = false;
+          this.makeToast(this.$t("SaveSuccess"), "success");
+          this.Television.file_id = "" 
           this.Television.file_name = "";
           this.Television.file_extension = "";
         })
@@ -195,9 +215,8 @@ export default {
     },
     Update() {
       this.SaveLoading = true;
-      //   this.Television.organization = 2905;
-      //    this.Television.post_date=2020-02-22
-      TelevisionService.CreateTelevision(this.Television)
+      if(this.$route.params.id ===0 ){
+        TelevisionService.CreateTelevision(this.Television)
         .then((res) => {
           this.SaveLoading = false;
           this.makeToast(this.$t("SaveSuccess"), "success");
@@ -210,6 +229,21 @@ export default {
           this.SaveLoading = false;
           this.makeToast(error.response.data.detail, "danger");
         });
+      }else{
+         TelevisionService.UpdateTelevision(this.Television)
+        .then((res) => {
+          this.SaveLoading = false;
+          this.makeToast(this.$t("SaveSuccess"), "success");
+          var vm = this;
+          setTimeout(() => {
+            vm.$router.push({ name: "Television" });
+          }, 500);
+        })
+        .catch((error) => {
+          this.SaveLoading = false;
+          this.makeToast(error.response.data.detail, "danger");
+        });
+      }
     },
 
     validURL(str) {

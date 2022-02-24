@@ -59,7 +59,7 @@
                 :placeholder="$t('ChooseBelow')"
                 label="fullname"
                 v-model="filter.oblast"
-                @input="Refresh"
+                @input="RefreshOblast"
               ></v-select>
             </b-col>
           </b-row>
@@ -267,7 +267,7 @@ export default {
           label: this.$t("television"),
           tdClass: "text-left",
         },
-        { key: !this.iscomponent ? "actions" : "", label: this.$t("actions") },
+        // { key: !this.iscomponent ? "actions" : "", label: this.$t("actions") },
       ],
       totalrow: 0,
       DeleteLoading: false,
@@ -289,7 +289,13 @@ export default {
    
   },
   methods: {
+      RefreshOblast(){
+          this.filter.organ = null,
+          this.filter.category = null
+          this.Refresh()
+      },
       OblastChange(){
+           this.filter.organ = null,
         OrganizationService.OrganizationGetOblastID(this.filter.oblast,this.filter.category,this.filter.specialization,this.filter.isconnect,null,this.lang).then(res =>{
         this.OrganizationList = res.data.data
     })
