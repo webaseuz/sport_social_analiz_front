@@ -291,7 +291,7 @@ export default {
   methods: {
       OblastChange(){
         OrganizationService.OrganizationGetOblastID(this.filter.oblast,this.filter.category,this.filter.specialization,this.filter.isconnect,null,this.lang).then(res =>{
-        this.OrganizationList = res.data
+        this.OrganizationList = res.data.data
     })
     this.Refresh()
       },
