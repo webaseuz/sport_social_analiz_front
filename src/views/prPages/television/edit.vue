@@ -34,7 +34,7 @@
             <b-form-file
               id="file"
               :placeholder="$t('file')"
-              v-model="file_name"
+              v-model="Television.file_name"
               @change="ChangeFile"
             ></b-form-file>
           </b-col>
@@ -157,7 +157,7 @@ export default {
     },
     DownloadFile() {
       this.DownloadLoading = true;
-      TelevisionService.DownloadFile(this.Television.file_id)
+      TelevisionService.DownloadFile(this.Television.file_id,this.Television.file_extension)
         .then((res) => {
           this.DownloadLoading = false;
           this.downloadFile(res, this.Television.file_name);
@@ -169,11 +169,12 @@ export default {
         });
     },
     downloadFile(response, item) {
+        var headers = response.headers;
       var blob = new Blob([response.data]);
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "asdasd"); //or any other extension
+      link.setAttribute("download", this.Television.file_name+"."+ this.Television.file_extension); //or any other extension
       document.body.appendChild(link);
       link.click();
     },

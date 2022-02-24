@@ -20,6 +20,9 @@
               v-model="filter.date_to"
             />
           </b-col>
+          <b-col  sm="12" md="6" lg="1">
+               <b-button style="width:100%" variant="primary" @click="Refresh"> <feather-icon icon="SearchIcon"></feather-icon> </b-button>
+          </b-col>
           <b-col>
                <b-button variant="primary" @click="Create"> <feather-icon icon="PlusIcon"></feather-icon> {{ $t('Add') }} </b-button>
           </b-col>

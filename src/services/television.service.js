@@ -31,8 +31,10 @@ const TelevisionService = {
   DeleteTelevision(id) {
     return ApiService.delete(`/DeleteTelevision/${id}/`);
   },
-  DownloadFile(id) {
-    return ApiService.get(`/DownloadFile/${id}/`);
+  DownloadFile(file_id, file_extension) {
+    return ApiService.print(
+      `/DownloadFile/file_id=${file_id}&file_extension=${file_extension}/`
+    );
   },
   UpdateTelevision(data) {
     return ApiService.put(`/UpdateTelevision/`, data);

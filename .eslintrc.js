@@ -78,5 +78,7 @@ module.exports = {
     "space-before-function-paren": "off",
     "arrow-spacing": "off",
     "no-whitespace-before-property": "off",
+    "prefer-const": "off",
+    "no-useless-concat": "off",
   },
 };

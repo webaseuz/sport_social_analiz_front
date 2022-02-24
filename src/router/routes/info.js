@@ -174,6 +174,20 @@ export default [
     },
   },
   {
+    path: "/television/indexMain",
+    name: "TelevisionMain",
+    component: () => import("@/views/prPages/television/indexMain.vue"),
+    meta: {
+      pageTitle: "Television",
+      breadcrumb: [
+        {
+          text: "Television",
+          active: true,
+        },
+      ],
+    },
+  },
+  {
     path: "/television",
     name: "MainTelevision",
     component: () => import("@/views/prPages/television/indexMain.vue"),
@@ -188,21 +202,21 @@ export default [
     },
   },
   {
-    path:"/televisionedit/id=:id",
-    name:'EditTelevision',
-    component:() => import('@/views/prPages/television/edit.vue'),
-    meta:{
-      pageTitle:"EditTelevision",
-      breadcrumb:[
+    path: "/televisionedit/id=:id",
+    name: "EditTelevision",
+    component: () => import("@/views/prPages/television/edit.vue"),
+    meta: {
+      pageTitle: "EditTelevision",
+      breadcrumb: [
         {
-          text:'Television'
+          text: "Television",
         },
         {
-          text:"EditTelevision",
-          active:true
-        }
-      ]
-    }
+          text: "EditTelevision",
+          active: true,
+        },
+      ],
+    },
   },
   {
     path: "/user",

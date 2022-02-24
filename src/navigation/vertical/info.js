@@ -75,6 +75,11 @@ export default [
     icon: "TvIcon",
   },
   {
+    title: "Television",
+    route: "TelevisionMain",
+    icon: "TvIcon",
+  },
+  {
     title: "User",
     route: "User",
     icon: "UserIcon",
