@@ -103,6 +103,7 @@ export default {
         { id: 1, name: this.$t("radio") },
         { id: 2, name: this.$t("gazeta") },
         { id: 3, name: this.$t("jurnal") },
+        { id: 4, name: this.$t("boshqalar") },
       ],
       loading: false,
       lang: localStorage.getItem("locale"),

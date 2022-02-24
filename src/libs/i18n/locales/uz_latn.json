@@ -110,5 +110,6 @@
   "DeleteSuccess": "Muvaffaqiyatli o‘chirildi",
   "update_success": "Muvaffaqiyatli o‘zgartirildi",
   "create_success": "Muvaffaqiyatli yaratildi",
-  "file_attached": "Fayl muvaffaqiyatli biriktirildi"
+  "file_attached": "Fayl muvaffaqiyatli biriktirildi",
+  "boshqalar":"Boshqa OAV"
 }
