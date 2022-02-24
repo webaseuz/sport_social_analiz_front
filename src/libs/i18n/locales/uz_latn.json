@@ -103,11 +103,12 @@
   "content_type": "Kontent turi",
   "content": "Kontent",
   "file": "Fayl",
-  "Television": "Televideniya",
+  "Television": "Qo'shimcha ommaviy ahborot vositasidagi faoliyatni kiritish",
+  "TelevisionPosition":"Qo'shimcha ommaviy ahborot vositasidagi faoliyat reytingi",
   "Delete": "Ўчириш",
-  "WantDelete":"",
-  "DeleteSuccess": "Муваффақиятли ўчирилди",
-  "update_success": "Муваффақиятли ўзгартирилди",
-  "create_success": "Муваффақиятли яратилди",
-  "file_attached": "Файл муваффақиятли бириктирилди"
+  "WantDelete":"Haqiqatdan ham o‘chirishni xohlaysizmi?",
+  "DeleteSuccess": "Muvaffaqiyatli o‘chirildi",
+  "update_success": "Muvaffaqiyatli o‘zgartirildi",
+  "create_success": "Muvaffaqiyatli yaratildi",
+  "file_attached": "Fayl muvaffaqiyatli biriktirildi"
 }

@@ -178,24 +178,10 @@ export default [
     name: "TelevisionMain",
     component: () => import("@/views/prPages/television/indexMain.vue"),
     meta: {
-      pageTitle: "Television",
+      pageTitle: "TelevisionPosition",
       breadcrumb: [
         {
-          text: "Television",
-          active: true,
-        },
-      ],
-    },
-  },
-  {
-    path: "/television",
-    name: "MainTelevision",
-    component: () => import("@/views/prPages/television/indexMain.vue"),
-    meta: {
-      pageTitle: "Television",
-      breadcrumb: [
-        {
-          text: "Television",
+          text: "TelevisionPosition",
           active: true,
         },
       ],
