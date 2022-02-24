@@ -206,13 +206,13 @@ export default [
     name: "EditTelevision",
     component: () => import("@/views/prPages/television/edit.vue"),
     meta: {
-      pageTitle: "EditTelevision",
+      pageTitle: "Television",
       breadcrumb: [
         {
           text: "Television",
         },
         {
-          text: "EditTelevision",
+          text: "Television",
           active: true,
         },
       ],

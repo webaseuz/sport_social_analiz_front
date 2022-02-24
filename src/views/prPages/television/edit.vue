@@ -38,7 +38,7 @@
               @change="ChangeFile"
             ></b-form-file>
           </b-col>
-          <b-row v-if="Television.file_name != ''" class="p-1">
+          <b-row v-if="Television.file_name.length != 0" class="p-1">
             <b-card class="styleCard">
               <p>{{ Television.file_name }}.{{ Television.file_extension }}</p>
               <b-row>
@@ -166,7 +166,7 @@ export default {
         .then((res) => {
           this.DownloadLoading = false;
           this.downloadFile(res, this.Television.file_name);
-          this.makeToast(this.$t("SaveSuccess"), "success");
+          this.makeToast(this.$t("file_attached"), "success");
         })
         .catch((error) => {
           this.DownloadLoading = false;
@@ -185,10 +185,10 @@ export default {
     },
     DeleteFile() {
       this.DeleteLoading = true;
-      TelevisionService.DeleteTelevision(this.Television.file_id)
+      TelevisionService.DeleteFile(this.Television.file_id,this.Television.file_extension)
         .then((res) => {
           this.DeleteLoading = false;
-          this.makeToast(this.$t("SaveSuccess"), "success");
+          this.makeToast(this.$t("DeleteSuccess"), "success");
           this.Television.file_id = "" 
           this.Television.file_name = "";
           this.Television.file_extension = "";
@@ -200,10 +200,10 @@ export default {
     },
     DeleteFileNew() {
       this.DeleteLoading = true;
-      TelevisionService.DeleteTelevision(this.Television.file_id)
+      TelevisionService.DeleteFile(this.Television.file_id,this.Television.file_extension)
         .then((res) => {
           this.DeleteLoading = false;
-          this.makeToast(this.$t("SaveSuccess"), "success");
+          this.makeToast(this.$t("DeleteSuccess"), "success");
           this.Television.file_id = "" 
           this.Television.file_name = "";
           this.Television.file_extension = "";
@@ -219,7 +219,7 @@ export default {
         TelevisionService.CreateTelevision(this.Television)
         .then((res) => {
           this.SaveLoading = false;
-          this.makeToast(this.$t("SaveSuccess"), "success");
+          this.makeToast(this.$t("create_success"), "success");
           var vm = this;
           setTimeout(() => {
             vm.$router.push({ name: "Television" });
@@ -230,10 +230,10 @@ export default {
           this.makeToast(error.response.data.detail, "danger");
         });
       }else{
-         TelevisionService.UpdateTelevision(this.Television)
+         TelevisionService.UpdateTelevision(this.Television.id,this.Television)
         .then((res) => {
           this.SaveLoading = false;
-          this.makeToast(this.$t("SaveSuccess"), "success");
+          this.makeToast(this.$t("update_success"), "success");
           var vm = this;
           setTimeout(() => {
             vm.$router.push({ name: "Television" });

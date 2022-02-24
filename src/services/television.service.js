@@ -31,13 +31,18 @@ const TelevisionService = {
   DeleteTelevision(id) {
     return ApiService.delete(`/DeleteTelevision/${id}/`);
   },
+  DeleteFile(file_id, file_extension) {
+    return ApiService.delete(
+      `/DeleteFile/file_id=${file_id}&file_extension=${file_extension}/`
+    );
+  },
   DownloadFile(file_id, file_extension) {
     return ApiService.print(
       `/DownloadFile/file_id=${file_id}&file_extension=${file_extension}/`
     );
   },
-  UpdateTelevision(data) {
-    return ApiService.put(`/UpdateTelevision/`, data);
+  UpdateTelevision(id, data) {
+    return ApiService.put(`/UpdateTelevision/${id}/`, data);
   },
   Update(data) {
     if (

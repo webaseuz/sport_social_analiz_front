@@ -103,5 +103,11 @@
   "content_type": "Kontent turi",
   "content": "Kontent",
   "file": "Fayl",
-  "Television": "Televideniya"
+  "Television": "Televideniya",
+  "Delete": "Ўчириш",
+  "WantDelete":"",
+  "DeleteSuccess": "Муваффақиятли ўчирилди",
+  "update_success": "Муваффақиятли ўзгартирилди",
+  "create_success": "Муваффақиятли яратилди",
+  "file_attached": "Файл муваффақиятли бириктирилди"
 }
