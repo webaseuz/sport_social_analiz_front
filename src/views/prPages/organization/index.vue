@@ -1,10 +1,23 @@
 <template>
     <div>
         <b-card class="text-right" v-if="!iscomponent">
+            
             <b-button variant="primary" @click="Create"> <feather-icon icon="PlusIcon"></feather-icon> {{ $t('Add') }} </b-button>
         </b-card>
         <b-overlay :show="loading">
             <b-card>
+                 <b-row class="mb-1">
+                     <b-col sm="12" md="12" lg="3">
+                         <b-input-group>
+                        <b-form-input type="text" v-model="filter.found"></b-form-input>
+                        <b-input-group-append>
+                            <b-button variant="primary" @click="Refresh">
+                                <feather-icon icon="SearchIcon"></feather-icon>
+                            </b-button>
+                        </b-input-group-append>
+                    </b-input-group>
+                     </b-col>
+                 </b-row>
                 <b-table
                     :fields="fields"
                     :items="items"
@@ -106,7 +119,8 @@ export default{
                 category : null,
                 specialization : null,
                 organ : null,
-                isconnect : null
+                isconnect : null,
+                found:null
             },
             fields : [
                 { key : 'oblast_name',label : this.$t('oblast'),tdClass : 'text-left' },
@@ -150,7 +164,8 @@ export default{
                 this.filter.specialization,
                 this.filter.organ,
                 this.filter.isconnect,
-                this.lang
+                this.lang,
+                this.filter.found
             ).then(res => {
                 this.items = res.data.result
                 this.totalrow = res.data.total_row
