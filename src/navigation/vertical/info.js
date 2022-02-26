@@ -44,6 +44,21 @@ export default [
     icon: "SettingsIcon",
   },
   {
+    title: "Television",
+    route: "Television",
+    icon: "TvIcon",
+  },
+  {
+    title: "TelevisionPosition",
+    route: "TelevisionMain",
+    icon: "TvIcon",
+  },
+  {
+    title: "TelevisionPosition",
+    route: "IndexDownload",
+    icon: "TvIcon",
+  },
+  {
     title: "Rate",
     route: "Rate",
     icon: "CheckSquareIcon",
@@ -68,21 +83,6 @@ export default [
     title: "Organization",
     route: "Organization",
     icon: "HexagonIcon",
-  },
-  {
-    title: "Television",
-    route: "Television",
-    icon: "TvIcon",
-  },
-  {
-    title: "TelevisionPosition",
-    route: "TelevisionMain",
-    icon: "TvIcon",
-  },
-  {
-    title: "TelevisionPosition",
-    route: "IndexDownload",
-    icon: "TvIcon",
   },
   {
     title: "User",
