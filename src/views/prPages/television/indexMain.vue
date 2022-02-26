@@ -124,14 +124,14 @@
             id="basicInput"
             :placeholder="$t('date_from')"
             type="date"
-            style="width:80%;margin-right:10px"
+            style="width:180px;margin-right:10px"
             v-model="filter.date_from"
           />
           <b-form-input
             id="basicInput"
             :placeholder="$t('date_to')"
             type="date"
-            style="width:80%;margin-right:10px"
+            style="width:180px;margin-right:10px"
             v-model="filter.date_to"
           />
            <b-button variant="primary" @click="Refresh"> <feather-icon icon="SearchIcon"></feather-icon> </b-button>
@@ -155,6 +155,9 @@
         >
           <template v-slot:empty>
             <h5 class="text-center">{{ $t("NoItems") }}</h5>
+          </template>
+          <template #cell(full_name)="{item}">
+              <p class="m-0 p-0" style="color:blue" @click="MoveFunction(item)">{{item.full_name}}</p>
           </template>
           <template #cell(actions)="{item}">
             <b-link @click="EditItem(item)" style="margin-right:5px">
@@ -289,6 +292,9 @@ export default {
    
   },
   methods: {
+      MoveFunction(item){
+          this.$router.push({ name: "IndexDownload", query: { id: item.id } });
+      },
       RefreshOblast(){
           this.filter.organ = null,
           this.filter.category = null

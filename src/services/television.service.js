@@ -28,6 +28,19 @@ const TelevisionService = {
       `/GetTelevisionByOrgan/page=${page}&limit=${limit}&satsial=${satsial}&date_from=${date_from}&date_to=${date_to}&lang=${lang}/`
     );
   },
+  GetTelevisionByInsertOrgan(
+    page,
+    limit,
+    organ,
+    satsial,
+    date_from,
+    date_to,
+    lang
+  ) {
+    return ApiService.get(
+      `/GetTelevisionByInsertOrgan/page=${page}&limit=${limit}&organ=${organ}&satsial=${satsial}&date_from=${date_from}&date_to=${date_to}&lang=${lang}/`
+    );
+  },
   DeleteTelevision(id) {
     return ApiService.delete(`/DeleteTelevision/${id}/`);
   },

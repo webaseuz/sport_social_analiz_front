@@ -7,7 +7,7 @@
             <h5>{{ $t("content_type") }}</h5>
             <v-select
               :options="ContentType"
-              :reduce="(item) => item.name"
+              :reduce="(item) => item.key"
               :placeholder="$t('ChooseBelow')"
               label="name"
               v-model="Television.content_type"
@@ -99,11 +99,11 @@ export default {
       show: false,
       Television: {},
       ContentType: [
-        { id: 0, name: this.$t("television") },
-        { id: 1, name: this.$t("radio") },
-        { id: 2, name: this.$t("gazeta") },
-        { id: 3, name: this.$t("jurnal") },
-        { id: 4, name: this.$t("boshqalar") },
+        { id: 0, name: this.$t("television") ,key: 'television'},
+        { id: 1, name: this.$t("radio") ,key:'radio'},
+        { id: 2, name: this.$t("gazeta"),key:'gazeta' },
+        { id: 3, name: this.$t("jurnal"), key:'jurnal' },
+        { id: 4, name: this.$t("boshqalar"),key:'other' },
       ],
       loading: false,
       lang: localStorage.getItem("locale"),

@@ -188,6 +188,20 @@ export default [
     },
   },
   {
+    path: "/television/indexDownload/",
+    name: "IndexDownload",
+    component: () => import("@/views/prPages/television/indexDownload.vue"),
+    meta: {
+      pageTitle: "TelevisionPosition",
+      breadcrumb: [
+        {
+          text: "TelevisionPosition",
+          active: true,
+        },
+      ],
+    },
+  },
+  {
     path: "/televisionedit/id=:id",
     name: "EditTelevision",
     component: () => import("@/views/prPages/television/edit.vue"),

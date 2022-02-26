@@ -80,6 +80,11 @@ export default [
     icon: "TvIcon",
   },
   {
+    title: "TelevisionPosition",
+    route: "IndexDownload",
+    icon: "TvIcon",
+  },
+  {
     title: "User",
     route: "User",
     icon: "UserIcon",

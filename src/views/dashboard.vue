@@ -99,7 +99,7 @@
               <b-overlay :show="selectOrgLoading || MainLoading">
                   <b-card>
                     <b-row>
-                        <b-col sm="12" md="12" lg="6">
+                        <b-col sm="12" md="12" lg="12">
                             <b-button size="md" class="mr-1 my-1" @click="SelectSocial(null)" :variant="filter.socialid === null ? 'primary' :'outline-primary'"> <feather-icon size="30" style="margin-top:8px;margin-bottom:8px" icon="GridIcon"></feather-icon> </b-button>
                             <b-button size="md" class="mr-1 my-1" @click="SelectSocial('web_site')" :disabled="canView.web_site == null || !canView.web_site.bool" :variant="canView.web_site &&canView.web_site.bool ? filter.socialid === 'web_site' ? 'primary' : 'outline-primary' : 'outline-danger'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="GlobeIcon"></feather-icon> </b-button>
                             <b-button size="md" class="mr-1 my-1" @click="SelectSocial('telegram')" :disabled="canView.telegram == null || !canView.telegram.bool" :variant="canView.telegram && canView.telegram.bool ? filter.socialid === 'telegram' ? 'primary' : 'outline-primary' : 'outline-danger'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="NavigationIcon"></feather-icon> </b-button>
@@ -107,9 +107,12 @@
                             <b-button size="md" class="mr-1 my-1" @click="SelectSocial('instagram_new')" :disabled="canView.instagram_new == null || !canView.instagram_new.bool" :variant="canView.instagram_new && canView.instagram_new.bool ? filter.socialid === 'instagram_new' ? 'primary' : 'outline-primary' : 'outline-danger'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="InstagramIcon"></feather-icon> </b-button>
                             <b-button size="md" class="mr-1 my-1" @click="SelectSocial('youtube')" :disabled="canView.youtube == null || !canView.youtube.bool" :variant="canView.youtube && canView.youtube.bool ? filter.socialid === 'youtube' ? 'primary' : 'outline-primary' : 'outline-danger'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="YoutubeIcon"></feather-icon> </b-button>
                            <b-button size="md" class="mr-1 my-1" @click="SelectSocial('television')" :disabled="canView.television == null || !canView.television.bool" :variant="canView.television && canView.television.bool ? filter.socialid === 'television' ? 'primary' : 'outline-primary' : 'outline-danger'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="TvIcon"></feather-icon> </b-button>
-                            <!-- <b-button size="md" class="mr-1" @click="SelectSocial('television')" :disabled="!canView.television" :variant="canView.television ? filter.socialid === 'television' ? 'primary' : 'outline-primary' : 'outline-danger'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="TvIcon"></feather-icon> </b-button> -->
-                        </b-col>
-                        <b-col sm="12" md="12" lg="6" class="d-flex align-items-center justify-content-end">
+                           <b-button size="md" class="mr-1 my-1" @click="SelectSocial('radio')" :disabled="canView.radio == null || !canView.radio.bool" :variant="canView.radio && canView.radio.bool ? filter.socialid === 'radio' ? 'primary' : 'outline-primary' : 'outline-danger'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="RadioIcon"></feather-icon> </b-button>
+                           <b-button size="md" class="mr-1 my-1" @click="SelectSocial('gazeta')" :disabled="canView.gazeta == null || !canView.gazeta.bool" :variant="canView.gazeta && canView.gazeta.bool ? filter.socialid === 'gazeta' ? 'primary' : 'outline-primary' : 'outline-danger'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="BookIcon"></feather-icon> </b-button>
+                           <b-button size="md" class="mr-1 my-1" @click="SelectSocial('jurnal')" :disabled="canView.jurnal == null || !canView.jurnal.bool" :variant="canView.jurnal && canView.jurnal.bool ? filter.socialid === 'jurnal' ? 'primary' : 'outline-primary' : 'outline-danger'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="BookOpenIcon"></feather-icon> </b-button>
+                       
+                       </b-col>
+                        <b-col sm="12" md="12" lg="6" class="d-flex align-items-center ">
                             <b-form-input
                                 id="basicInput"
                                 placeholder="Enter Email"
@@ -126,12 +129,7 @@
                             />
                             <b-button variant="primary" @click="SelectDate"> <feather-icon icon="SearchIcon"></feather-icon> </b-button>
                         </b-col>
-                    </b-row>
-                    <b-row class="mt-1" >
-                        <b-col>
-                            <b-button v-if="!!filter.socialid && !!filter.orgid" variant="primary" @click="GotoSocialWebSite"> {{ $t('go') }} <feather-icon icon="ChevronsRightIcon"></feather-icon> </b-button>
-                        </b-col>
-                        <b-col class="d-flex align-items-center justify-content-end">
+                        <b-col  sm="12" md="12" lg="6" class="d-flex align-items-center justify-content-end">
                             <b-button-group
                                     size="sm"
                                 >
@@ -161,6 +159,12 @@
                                     </b-button>
                                 </b-button-group>
                         </b-col>
+                    </b-row>
+                    <b-row class="mt-1" >
+                        <b-col>
+                            <b-button v-if="!!filter.socialid && !!filter.orgid" variant="primary" @click="GotoSocialWebSite"> {{ $t('go') }} <feather-icon icon="ChevronsRightIcon"></feather-icon> </b-button>
+                        </b-col>
+                        
                     </b-row>
                 </b-card>
                 <b-row class="match-height" >
