@@ -76,7 +76,7 @@
               ></v-select>
             </b-col>
           </b-row>
-           <b-row class="mt-1">
+          <b-row class="mt-1">
             <b-col>
               <h5>{{ $t("Organization") }}</h5>
               <v-select
@@ -116,115 +116,165 @@
         </b-card>
       </b-col>
       <b-col>
- <b-card class="text-right" v-if="!iscomponent">
-      <b-row>
-          <b-col sm="12" md="6" lg="6"></b-col>
-        <b-col sm="12" md="6" lg="6" class="d-flex align-items-center justify-content-end">
-          <b-form-input
-            id="basicInput"
-            :placeholder="$t('date_from')"
-            type="date"
-            style="width:180px;margin-right:10px"
-            v-model="filter.date_from"
-          />
-          <b-form-input
-            id="basicInput"
-            :placeholder="$t('date_to')"
-            type="date"
-            style="width:180px;margin-right:10px"
-            v-model="filter.date_to"
-          />
-           <b-button variant="primary" @click="Refresh"> <feather-icon icon="SearchIcon"></feather-icon> </b-button>
-        </b-col>
-      </b-row>
-    </b-card>
-    <b-overlay :show="loading">
-      <b-card>
-        <b-table
-          :fields="fields"
-          :items="items"
-          show-empty
-          class="text-center"
-          sticky-header="60vh"
-          no-border-collapse
-          style="cursor: pointer;"
-          :select-mode="'single'"
-          :selectable="iscomponent"
-          selected-variant="primary"
-          @row-selected="onRowSelected"
-        >
-          <template v-slot:empty>
-            <h5 class="text-center">{{ $t("NoItems") }}</h5>
-          </template>
-          <template #cell(full_name)="{item}">
-              <p class="m-0 p-0" style="color:blue" @click="MoveFunction(item)">{{item.full_name}}</p>
-          </template>
-          <template #cell(actions)="{item}">
-            <b-link @click="EditItem(item)" style="margin-right:5px">
-              <feather-icon icon="EditIcon"></feather-icon>
-            </b-link>
-            <b-link @click="OpenDeleteModal(item)">
-              <feather-icon icon="TrashIcon"></feather-icon>
-            </b-link>
-            <b-modal
-              :ref="'DeleteModal' + item.id"
-              no-close-on-backdrop
-              hide-footer
+        <b-card class="text-right" v-if="!iscomponent">
+          <b-row>
+            <b-col sm="12" md="6" lg="6"></b-col>
+            <b-col
+              sm="12"
+              md="6"
+              lg="6"
+              class="d-flex align-items-center justify-content-end"
             >
-              <template #modal-title>
-                {{ $t("Delete") }}
-              </template>
-              <b-card-text>
-                <b-row>
-                  <b-col>
-                    {{ $t("WantDelete") }}
-                  </b-col>
-                </b-row>
-                <b-row>
-                  <b-col class="text-right">
-                    <b-button
-                      class="mr-1"
-                      @click="$refs['DeleteModal' + item.id].hide()"
-                      variant="danger"
-                    >
-                      {{ $t("no") }}
-                    </b-button>
-                    <b-button @click="Delete(item)" variant="success">
-                      <b-spinner small v-if="DeleteLoading"></b-spinner>
-                      {{ $t("yes") }}
-                    </b-button>
-                  </b-col>
-                </b-row>
-              </b-card-text>
-            </b-modal>
-          </template>
-        </b-table>
-        <b-row>
-          <b-col> </b-col>
-          <b-col class="d-flex align-items-center justify-content-end">
-            <b-pagination
-              v-model="filter.page"
-              :total-rows="totalrow"
-              first-number
-              last-number
-              prev-class="prev-item"
-              next-class="next-item"
-              @input="Refresh"
+              <b-form-input
+                id="basicInput"
+                :placeholder="$t('date_from')"
+                type="date"
+                style="width:180px;margin-right:10px"
+                v-model="filter.date_from"
+              />
+              <b-form-input
+                id="basicInput"
+                :placeholder="$t('date_to')"
+                type="date"
+                style="width:180px;margin-right:10px"
+                v-model="filter.date_to"
+              />
+              <b-button variant="primary" @click="Refresh">
+                <feather-icon icon="SearchIcon"></feather-icon>
+              </b-button>
+            </b-col>
+          </b-row>
+          <b-row class="mt-1">
+            <b-col class="d-flex align-items-center justify-content-end">
+              <b-button-group size="sm">
+                <b-button
+                  :variant="
+                    filter.timetype == 'day' ? 'primary' : 'outline-primary'
+                  "
+                  @click="SelectDateType('day')"
+                >
+                  {{ $t("day") }}
+                </b-button>
+                <b-button
+                  :variant="
+                    filter.timetype == 'week' ? 'primary' : 'outline-primary'
+                  "
+                  @click="SelectDateType('week')"
+                >
+                  {{ $t("week") }}
+                </b-button>
+                <b-button
+                  :variant="
+                    filter.timetype == 'month' ? 'primary' : 'outline-primary'
+                  "
+                  @click="SelectDateType('month')"
+                >
+                  {{ $t("month") }}
+                </b-button>
+                <b-button
+                  :variant="
+                    filter.timetype == 'year' ? 'primary' : 'outline-primary'
+                  "
+                  @click="SelectDateType('year')"
+                >
+                  {{ $t("year") }}
+                </b-button>
+              </b-button-group>
+            </b-col>
+          </b-row>
+        </b-card>
+        <b-overlay :show="loading">
+          <b-card>
+            <b-table
+              :fields="fields"
+              :items="items"
+              show-empty
+              class="text-center"
+              sticky-header="60vh"
+              no-border-collapse
+              style="cursor: pointer;"
+              :select-mode="'single'"
+              :selectable="iscomponent"
+              selected-variant="primary"
+              @row-selected="onRowSelected"
             >
-              <template #prev-text>
-                <feather-icon icon="ChevronLeftIcon" size="18" />
+              <template v-slot:empty>
+                <h5 class="text-center">{{ $t("NoItems") }}</h5>
               </template>
-              <template #next-text>
-                <feather-icon icon="ChevronRightIcon" size="18" />
+              <template #cell(full_name)="{item}">
+                <p
+                  class="m-0 p-0"
+                  style="color:blue"
+                  @click="MoveFunction(item)"
+                >
+                  {{ item.full_name }}
+                </p>
               </template>
-            </b-pagination>
-          </b-col>
-        </b-row>
-      </b-card>
-    </b-overlay>
+              <template #cell(actions)="{item}">
+                <b-link @click="EditItem(item)" style="margin-right:5px">
+                  <feather-icon icon="EditIcon"></feather-icon>
+                </b-link>
+                <b-link @click="OpenDeleteModal(item)">
+                  <feather-icon icon="TrashIcon"></feather-icon>
+                </b-link>
+                <b-modal
+                  :ref="'DeleteModal' + item.id"
+                  no-close-on-backdrop
+                  hide-footer
+                >
+                  <template #modal-title>
+                    {{ $t("Delete") }}
+                  </template>
+                  <b-card-text>
+                    <b-row>
+                      <b-col>
+                        {{ $t("WantDelete") }}
+                      </b-col>
+                    </b-row>
+                    <b-row>
+                      <b-col class="text-right">
+                        <b-button
+                          class="mr-1"
+                          @click="$refs['DeleteModal' + item.id].hide()"
+                          variant="danger"
+                        >
+                          {{ $t("no") }}
+                        </b-button>
+                        <b-button @click="Delete(item)" variant="success">
+                          <b-spinner small v-if="DeleteLoading"></b-spinner>
+                          {{ $t("yes") }}
+                        </b-button>
+                      </b-col>
+                    </b-row>
+                  </b-card-text>
+                </b-modal>
+              </template>
+            </b-table>
+            <b-row>
+              <b-col> </b-col>
+              <b-col class="d-flex align-items-center justify-content-end">
+                <b-pagination
+                  v-model="filter.page"
+                  :total-rows="totalrow"
+                  first-number
+                  last-number
+                  prev-class="prev-item"
+                  next-class="next-item"
+                  @input="Refresh"
+                >
+                  <template #prev-text>
+                    <feather-icon icon="ChevronLeftIcon" size="18" />
+                  </template>
+                  <template #next-text>
+                    <feather-icon icon="ChevronRightIcon" size="18" />
+                  </template>
+                </b-pagination>
+              </b-col>
+            </b-row>
+          </b-card>
+        </b-overlay>
       </b-col>
     </b-row>
-    
   </div>
 </template>
 <script>
@@ -246,7 +296,7 @@ export default {
       items: [],
       OblastList: [],
       SpecializationList: [],
-      OrganizationList:[],
+      OrganizationList: [],
       CategoryList: [],
       selectOrgLoading: false,
       filter: {
@@ -259,6 +309,7 @@ export default {
         isconnect: null,
         date_from: "",
         date_to: "",
+        timetype: "day",
       },
       fields: [
         { key: "full_name", label: this.$t("full_name"), tdClass: "text-left" },
@@ -289,44 +340,47 @@ export default {
     OrganizationService.GetCategoryList(this.lang).then((res) => {
       this.CategoryList = res.data;
     });
-   
   },
   methods: {
-      MoveFunction(item){
-          this.$router.push({ name: "IndexDownload", query: { id: item.id } });
-      },
-      RefreshOblast(){
-          this.filter.organ = null,
-          this.filter.category = null
-          this.Refresh()
-      },
-      OblastChange(){
-           this.filter.organ = null,
-        OrganizationService.OrganizationGetOblastID(this.filter.oblast,this.filter.category,this.filter.specialization,this.filter.isconnect,null,this.lang).then(res =>{
-        this.OrganizationList = res.data.data
-    })
-    this.Refresh()
-      },
-       ChangeConnectOrg(bool){
-            if(bool === false){
-                if(this.filter.isconnect === false){
-                    this.filter.isconnect = null
-                }
-                else{
-                    this.filter.isconnect = false
-                }
-            }
-            if(bool === true){
-                if(this.filter.isconnect === true){
-                    this.filter.isconnect = null
-                }
-                else{
-                    this.filter.isconnect = true
-                }
-            }
-            this.Refresh()
-        },
-  
+    MoveFunction(item) {
+      this.$router.push({ name: "IndexDownload", query: { id: item.id } });
+    },
+    RefreshOblast() {
+      (this.filter.organ = null), (this.filter.category = null);
+      this.Refresh();
+    },
+    OblastChange() {
+      (this.filter.organ = null),
+        OrganizationService.OrganizationGetOblastID(
+          this.filter.oblast,
+          this.filter.category,
+          this.filter.specialization,
+          this.filter.isconnect,
+          null,
+          this.lang
+        ).then((res) => {
+          this.OrganizationList = res.data.data;
+        });
+      this.Refresh();
+    },
+    ChangeConnectOrg(bool) {
+      if (bool === false) {
+        if (this.filter.isconnect === false) {
+          this.filter.isconnect = null;
+        } else {
+          this.filter.isconnect = false;
+        }
+      }
+      if (bool === true) {
+        if (this.filter.isconnect === true) {
+          this.filter.isconnect = null;
+        } else {
+          this.filter.isconnect = true;
+        }
+      }
+      this.Refresh();
+    },
+
     SelectOrg(item) {
       this.filter.organ = item.id;
       this.$store.state.organ = this.filter.organ;
@@ -341,10 +395,14 @@ export default {
       this.filter.specialization = item.id;
       this.Refresh();
     },
+    SelectDateType(type) {
+      this.dateType(type);
+      this.SelectDate();
+    },
     dateType(type) {
       var date = new Date();
       this.filter.date_to = moment(date).format("YYYY-MM-DD");
-      // this.filter.timetype = type
+        this.filter.timetype = type;
       if (type == "day") {
         this.filter.date_from = this.filter.date_to;
       }
@@ -360,6 +418,9 @@ export default {
         date.setFullYear(date.getFullYear() - 1);
         this.filter.date_from = moment(date).format("YYYY-MM-DD");
       }
+    },
+    SelectDate() {
+      this.Refresh();
     },
     onRowSelected(items) {
       if (this.iscomponent == true) {
