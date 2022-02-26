@@ -39,11 +39,6 @@ export default [
     icon: "ClipboardIcon",
   },
   {
-    title: "SpesService",
-    route: "SpesSerice",
-    icon: "SettingsIcon",
-  },
-  {
     title: "Television",
     route: "Television",
     icon: "TvIcon",
@@ -57,6 +52,11 @@ export default [
     title: "TelevisionPosition",
     route: "IndexDownload",
     icon: "TvIcon",
+  },
+  {
+    title: "SpesService",
+    route: "SpesSerice",
+    icon: "SettingsIcon",
   },
   {
     title: "Rate",
