@@ -106,11 +106,11 @@
                             <b-button size="md" class="mr-1 my-1" @click="SelectSocial('fb_page')" :disabled="canView.fb_page == null || !canView.fb_page.bool" :variant="canView.fb_page && canView.fb_page.bool ? filter.socialid === 'fb_page' ? 'primary' : 'outline-primary' : 'outline-danger'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="FacebookIcon"></feather-icon> </b-button>
                             <b-button size="md" class="mr-1 my-1" @click="SelectSocial('instagram_new')" :disabled="canView.instagram_new == null || !canView.instagram_new.bool" :variant="canView.instagram_new && canView.instagram_new.bool ? filter.socialid === 'instagram_new' ? 'primary' : 'outline-primary' : 'outline-danger'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="InstagramIcon"></feather-icon> </b-button>
                             <b-button size="md" class="mr-1 my-1" @click="SelectSocial('youtube')" :disabled="canView.youtube == null || !canView.youtube.bool" :variant="canView.youtube && canView.youtube.bool ? filter.socialid === 'youtube' ? 'primary' : 'outline-primary' : 'outline-danger'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="YoutubeIcon"></feather-icon> </b-button>
-                           <b-button size="md" class="mr-1 my-1" @click="SelectSocial('television')" :disabled="canView.television == null || !canView.television.bool" :variant="canView.television && canView.television.bool ? filter.socialid === 'television' ? 'primary' : 'outline-primary' : 'outline-danger'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="TvIcon"></feather-icon> </b-button>
-                           <b-button size="md" class="mr-1 my-1" @click="SelectSocial('radio')" :disabled="canView.radio == null || !canView.radio.bool" :variant="canView.radio && canView.radio.bool ? filter.socialid === 'radio' ? 'primary' : 'outline-primary' : 'outline-danger'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="RadioIcon"></feather-icon> </b-button>
-                           <b-button size="md" class="mr-1 my-1" @click="SelectSocial('gazeta')" :disabled="canView.gazeta == null || !canView.gazeta.bool" :variant="canView.gazeta && canView.gazeta.bool ? filter.socialid === 'gazeta' ? 'primary' : 'outline-primary' : 'outline-danger'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="BookIcon"></feather-icon> </b-button>
-                           <b-button size="md" class="mr-1 my-1" @click="SelectSocial('jurnal')" :disabled="canView.jurnal == null || !canView.jurnal.bool" :variant="canView.jurnal && canView.jurnal.bool ? filter.socialid === 'jurnal' ? 'primary' : 'outline-primary' : 'outline-danger'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="BookOpenIcon"></feather-icon> </b-button>
-                        <b-button size="md" class="mr-1 my-1" @click="SelectSocial('other')" :disabled="canView.other == null || !canView.other.bool" :variant="canView.other && canView.other.bool ? filter.socialid === 'other' ? 'primary' : 'outline-primary' : 'outline-danger'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="MoreHorizontalIcon"></feather-icon> </b-button>
+                           <b-button size="md" class="mr-1 my-1" @click="SelectSocial('television')" variant="outline-primary"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="TvIcon"></feather-icon> </b-button>
+                           <b-button size="md" class="mr-1 my-1" @click="SelectSocial('radio')" variant="outline-primary"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="RadioIcon"></feather-icon> </b-button>
+                           <b-button size="md" class="mr-1 my-1" @click="SelectSocial('gazeta')" variant="outline-primary"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="BookIcon"></feather-icon> </b-button>
+                           <b-button size="md" class="mr-1 my-1" @click="SelectSocial('jurnal')" variant="outline-primary"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="BookOpenIcon"></feather-icon> </b-button>
+                        <b-button size="md" class="mr-1 my-1" @click="SelectSocial('other')" variant="outline-primary" > <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="MoreHorizontalIcon"></feather-icon> </b-button>
                        
                        </b-col>
                         <b-col sm="12" md="12" lg="6" class="d-flex align-items-center ">
@@ -613,7 +613,7 @@ export default {
                 this.filter.categoryid,
                 this.filter.specialization,
                 this.filter.orgid,
-                this.filter.isconnect
+                this.filter.isconnect 
             ).then(res => {
                 this.canView = res.data
                 this.MainLoading = false
