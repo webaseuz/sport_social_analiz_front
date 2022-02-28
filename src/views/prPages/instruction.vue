@@ -137,7 +137,7 @@ export default {
       },
       fields: [
          { key: "content", label: this.$t("content"), tdClass: "text-left" },
-        { key: "file_name", label: this.$t("file_name"), tdClass: "text-left" },
+        { key: "file_name", label: this.$t("file"), tdClass: "text-left" },
         { key: !this.iscomponent ? "actions" : "", label: this.$t("actions") },
       ],
       totalrow: 0,

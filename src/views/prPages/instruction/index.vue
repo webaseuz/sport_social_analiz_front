@@ -84,10 +84,10 @@
                   {{ $t("content") }}
                 </b-th>
                 <b-th class="text-center bg-primary text-white">
-                  {{ $t("file_name") }}
+                  {{ $t("file") }}
                 </b-th>
                 <b-th class="text-center bg-primary text-white">
-                  {{ $t("file") }}
+                  {{ $t("actions") }}
                 </b-th>
               </b-tr>
             </b-thead>
