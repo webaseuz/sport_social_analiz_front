@@ -73,9 +73,37 @@ export default [
     },
   },
   {
+    path: "/instructionDownload",
+    name: "InstructionDownload",
+    component: () => import("@/views/prPages/instruction/index.vue"),
+    meta: {
+      pageTitle: "Instruction",
+      breadcrumb: [
+        {
+          text: "Instruction",
+          active: true,
+        },
+      ],
+    },
+  },
+  {
     path: "/instruction",
     name: "Instruction",
     component: () => import("@/views/prPages/instruction.vue"),
+    meta: {
+      pageTitle: "Instruction",
+      breadcrumb: [
+        {
+          text: "Instruction",
+          active: true,
+        },
+      ],
+    },
+  },
+  {
+    path: "/instructionEdit/id=:id",
+    name: "InstructionEdit",
+    component: () => import("@/views/prPages/instructionEdit.vue"),
     meta: {
       pageTitle: "Instruction",
       breadcrumb: [

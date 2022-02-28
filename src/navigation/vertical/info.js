@@ -80,6 +80,11 @@ export default [
     icon: "FileTextIcon",
   },
   {
+    title: "Instruction",
+    route: "InstructionDownload",
+    icon: "FileTextIcon",
+  },
+  {
     title: "Organization",
     route: "Organization",
     icon: "HexagonIcon",
