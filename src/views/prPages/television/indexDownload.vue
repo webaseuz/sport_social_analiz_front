@@ -209,16 +209,35 @@
       </b-card>
       <b-overlay :show="loading">
         <b-card>
-          <b-table-simple class="mb-3" small striped responsive borderless>
+         <b-table
+          :fields="fields"
+          :items="InfoList"
+          show-empty
+          class="text-center"
+          sticky-header="60vh"
+          no-border-collapse
+          style="cursor: pointer;"
+          :select-mode="'single'"
+          :selectable="iscomponent"
+          selected-variant="primary"
+          @row-selected="onRowSelected"
+        >
+          <template v-slot:empty>
+            <h5 class="text-center">{{ $t("NoItems") }}</h5>
+          </template>
+          <template #cell(file)="{item}">
+            <b-link @click="DownloadFile(item)">
+                    <feather-icon
+                      icon="DownloadIcon"
+                      size="20"
+                      class="cursor-pointer"
+                    />
+                  </b-link>
+          </template>
+        </b-table>
+          <!-- <b-table-simple class="mb-3" small striped responsive borderless>
             <b-thead class="text-center">
               <b-tr>
-                <!-- <b-th
-                  style="vertical-align:middle"
-                  rowspan="2"
-                  class="bg-primary text-white"
-                >
-                  {{ $t("full_name") }}
-                </b-th> -->
                 <b-th class="text-center bg-primary text-white">
                   {{ $t("content") }}
                 </b-th>
@@ -235,7 +254,6 @@
             </b-thead>
             <b-tbody class="text-left">
               <b-tr v-for="(item, index) in InfoList" :key="index">
-                <!-- <b-th> {{ item.full_name }} </b-th> -->
                 <b-th>{{ item.content || "-" }}</b-th>
                 <b-th>{{ item.content_type || 0 }}</b-th>
                 <b-th>{{ item.post_date || "-" }}</b-th>
@@ -250,7 +268,14 @@
                 </b-th>
               </b-tr>
             </b-tbody>
-          </b-table-simple>
+            <b-tbody v-if="InfoList == 0">
+              <b-tr>
+                <b-td colspan="4" class="text-center">
+                  {{ $t("NoItems") }}
+                </b-td>
+              </b-tr>
+            </b-tbody>
+          </b-table-simple> -->
           <b-row>
             <b-col> </b-col>
             <b-col class="d-flex align-items-center justify-content-end">
@@ -299,6 +324,16 @@ export default {
         socialid: null,
         isconnect: null,
       },
+       fields: [
+        { key: "content", label: this.$t("content"), tdClass: "text-left" },
+        { key: "content_type", label: this.$t("content_type"), tdClass: "text-left" },
+        {
+          key: "post_date",
+          label: this.$t("post_date"),
+          tdClass: "text-left",
+        },
+        { key: "file", label: this.$t("file"), tdClass: "text-left" },
+      ],
       orgLoading: false,
       loading: false,
       InfoList: [],
@@ -335,74 +370,79 @@ export default {
       this.filter.from_date = this.$route.query.from_date || null;
       this.filter.to_date = this.$route.query.to_date || null;
     }
-     OrganizationService.GetOblastList(this.lang).then(res => {
-            this.OblastList = res.data
-        })
-        OrganizationService.GetCategoryList(this.lang).then(res => {
-            this.CategoryList = res.data
-        })
-        OrganizationService.Specialization(this.lang).then(res => {
-            this.SpecializationList = res.data
-        })
-     if(!!this.$route.query.id){
-            this.filter.organ = this.$route.query.id || null
-            this.filter.specialization = this.$route.query.specialization || null
-            this.filter.oblastid = this.$route.query.oblastid || null
-            this.filter.categoryid = this.$route.query.categoryid || null
-            this.RefreshOrg()
-            this.Refresh()
-        }
-        else{
-            this.TotalOrg()
-            this.Refresh()
-        }
+    OrganizationService.GetOblastList(this.lang).then((res) => {
+      this.OblastList = res.data;
+    });
+    OrganizationService.GetCategoryList(this.lang).then((res) => {
+      this.CategoryList = res.data;
+    });
+    OrganizationService.Specialization(this.lang).then((res) => {
+      this.SpecializationList = res.data;
+    });
+    if (!!this.$route.query.id) {
+      this.filter.organ = this.$route.query.id || null;
+      this.filter.specialization = this.$route.query.specialization || null;
+      this.filter.oblastid = this.$route.query.oblastid || null;
+      this.filter.categoryid = this.$route.query.categoryid || null;
+      this.RefreshOrg();
+      this.Refresh();
+    } else {
+      this.TotalOrg();
+      this.Refresh();
+    }
     this.Refresh();
   },
   methods: {
-       SelectOrg(item){
-            this.filter.organ = item.id
-            this.Refresh()
-        },
-       TotalOrg(){
-            this.filter.oblastid = null
-            this.filter.specialization = null
-            this.filter.categoryid = null
-            this.filter.organ = null
-            this.RefreshOrg()
-            
-        },
-       RefreshOrg(){
-            this.orgLoading = true
-            OrganizationService.OrganizationGetOblastID(this.filter.oblastid,this.filter.categoryid,this.filter.specialization,this.filter.isconnect,this.filter.socialid,this.lang).then(res => {
-                this.OrganizationList = res.data.data
-                this.orgLoading = false
-            }).catch(error => {
-                this.orgLoading = false
-            })
-            this.Refresh()
-        },
-       ChangeConnectOrg(bool){
-            if(bool === false){
-                if(this.filter.isconnect === false){
-                    this.filter.isconnect = null
-                }
-                else{
-                    this.filter.isconnect = false
-                }
-            }
-            if(bool === true){
-                if(this.filter.isconnect === true){
-                    this.filter.isconnect = null
-                }
-                else{
-                    this.filter.isconnect = true
-                }
-            }
-            this.RefreshOrg()
-        },
+    SelectOrg(item) {
+      this.filter.organ = item.id;
+      this.Refresh();
+    },
+    TotalOrg() {
+      this.filter.oblastid = null;
+      this.filter.specialization = null;
+      this.filter.categoryid = null;
+      this.filter.organ = null;
+      this.RefreshOrg();
+    },
+    RefreshOrg() {
+      this.orgLoading = true;
+      OrganizationService.OrganizationGetOblastID(
+        this.filter.oblastid,
+        this.filter.categoryid,
+        this.filter.specialization,
+        this.filter.isconnect,
+        this.filter.socialid,
+        this.lang
+      )
+        .then((res) => {
+          this.OrganizationList = res.data.data;
+          this.orgLoading = false;
+        })
+        .catch((error) => {
+          this.orgLoading = false;
+        });
+      this.Refresh();
+    },
+    ChangeConnectOrg(bool) {
+      if (bool === false) {
+        if (this.filter.isconnect === false) {
+          this.filter.isconnect = null;
+        } else {
+          this.filter.isconnect = false;
+        }
+      }
+      if (bool === true) {
+        if (this.filter.isconnect === true) {
+          this.filter.isconnect = null;
+        } else {
+          this.filter.isconnect = true;
+        }
+      }
+      this.RefreshOrg();
+    },
     DownloadFile(item) {
       this.DownloadLoading = true;
-      TelevisionService.DownloadFile(item.file_minio_id, item.file_extension)
+      TelevisionService.DownloadFile(item.file_id, item.file_extension)
         .then((res) => {
           this.DownloadLoading = false;
           this.downloadFile(res, item);
@@ -468,8 +508,8 @@ export default {
         this.filter.to_date,
         this.lang
       ).then((res) => {
-        this.InfoList = res.data.data;
         this.loading = false;
+        this.InfoList = res.data.data;
         this.totalrow = res.data.total_row;
       });
     },

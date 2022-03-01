@@ -255,7 +255,7 @@
                     </b-col>
                     
                     </b-row>
-                    <b-row v-if="PostedSeries.length > 0 && !filter.orgid">
+                    <b-row v-if="PostedSeries.length > 0 && !filter.orgid" v-show="filter.socialid != 'gazeta'&&filter.socialid != 'jurnal'&&filter.socialid != 'other'&&filter.socialid != 'television'&&filter.socialid != 'radio' ">
                         <b-col sm="12" md="12" lg="4">
                             <b-card>
                                 <vue-apex-charts
@@ -476,6 +476,7 @@ export default {
                         name: this.$t('isConnectFalse'),
                         data: Object.values(res.data).map(item => item.isconnect_false_count)
                     },
+
                 ]
                 this.ConnectDataOptions = {
                     colors: [
