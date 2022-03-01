@@ -111,5 +111,7 @@
   "update_success": "Успешно изменен",
   "create_success": "Успешно создан",
   "file_attached": "Файл успешно прикреплен",
-  "boshqalar":"Другие СМИ"
+  "boshqalar":"Другие СМИ",
+  "InstructionAdd":"Добавление инструкций",
+  "download":"Скачать"
 }

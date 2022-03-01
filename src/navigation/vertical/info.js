@@ -75,7 +75,7 @@ export default [
   // },
 
   {
-    title: "Instruction",
+    title: "InstructionAdd",
     route: "Instruction",
     icon: "FileTextIcon",
   },

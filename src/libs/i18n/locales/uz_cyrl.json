@@ -112,5 +112,7 @@
   "create_success": "Муваффақиятли яратилди",
   "file_attached": "Файл муваффақиятли бириктирилди",
   "Delete": "Ўчириш",
-  "boshqalar":"Бошқа ОАВ"
+  "boshqalar":"Бошқа ОАВ",
+  "InstructionAdd":"Йўриқнома қўшиш",
+  "download":"Юклаш"
 }

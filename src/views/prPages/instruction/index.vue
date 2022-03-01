@@ -69,17 +69,23 @@
         </b-row>
       </b-card> -->
       <b-overlay :show="loading">
-        <b-card>
-          <b-table-simple class="mb-3" small striped responsive borderless>
+        <b-row>
+          <b-col sm="12" md="12" lg="4" v-for="(item, index) in InfoList" :key="index">
+            <b-card>
+              <p>{{ item.content || "-" }}</p>
+              <div class="text-right">
+                <b-link v-b-tooltip.hover :title="$t('download')" @click="DownloadFile(item)">
+                  <feather-icon
+                    icon="DownloadIcon"
+                    size="25"
+                    class="cursor-pointer"
+                  />
+                </b-link>
+              </div>
+
+              <!-- <b-table-simple class="mb-3" small striped responsive borderless>
             <b-thead class="text-center">
               <b-tr>
-                <!-- <b-th
-                  style="vertical-align:middle"
-                  rowspan="2"
-                  class="bg-primary text-white"
-                >
-                  {{ $t("full_name") }}
-                </b-th> -->
                 <b-th class="text-center bg-primary text-white">
                   {{ $t("content") }}
                 </b-th>
@@ -93,7 +99,6 @@
             </b-thead>
             <b-tbody class="text-left">
               <b-tr v-for="(item, index) in InfoList" :key="index">
-                <!-- <b-th> {{ item.full_name }} </b-th> -->
                 <b-th>{{ item.content || "-" }}</b-th>
                 <b-th>{{ item.file_name || 0 }}</b-th>
                 <b-th>
@@ -128,15 +133,17 @@
                 </template>
               </b-pagination>
             </b-col>
-          </b-row>
-        </b-card>
+          </b-row> -->
+            </b-card>
+          </b-col>
+        </b-row>
       </b-overlay>
     </b-col>
   </b-row>
 </template>
 
 <script>
-import InstructionService from '@/services/instruction.service'
+import InstructionService from "@/services/instruction.service";
 import OrganizationService from "@/services/organization.service";
 import moment from "moment";
 import TelevisionService from "@/services/television.service";
@@ -160,10 +167,10 @@ export default {
       orgLoading: false,
       loading: false,
       InfoList: [],
-    //   OblastList: [],
-    //   CategoryList: [],
-    //   OrganizationList: [],
-    //   SpecializationList: [],
+      //   OblastList: [],
+      //   CategoryList: [],
+      //   OrganizationList: [],
+      //   SpecializationList: [],
       totalrow: 0,
       lang: localStorage.getItem("locale"),
     };
@@ -217,48 +224,54 @@ export default {
     this.Refresh();
   },
   methods: {
-       SelectOrg(item){
-            this.filter.organ = item.id
-            this.Refresh()
-        },
-       TotalOrg(){
-            this.filter.oblastid = null
-            this.filter.specialization = null
-            this.filter.categoryid = null
-            this.filter.organ = null
-            this.RefreshOrg()
-            
-        },
-       RefreshOrg(){
-            this.orgLoading = true
-            OrganizationService.OrganizationGetOblastID(this.filter.oblastid,this.filter.categoryid,this.filter.specialization,this.filter.isconnect,this.filter.socialid,this.lang).then(res => {
-                this.OrganizationList = res.data.data
-                this.orgLoading = false
-            }).catch(error => {
-                this.orgLoading = false
-            })
-            this.Refresh()
-        },
-       ChangeConnectOrg(bool){
-            if(bool === false){
-                if(this.filter.isconnect === false){
-                    this.filter.isconnect = null
-                }
-                else{
-                    this.filter.isconnect = false
-                }
-            }
-            if(bool === true){
-                if(this.filter.isconnect === true){
-                    this.filter.isconnect = null
-                }
-                else{
-                    this.filter.isconnect = true
-                }
-            }
-            this.RefreshOrg()
-        },
-         makeToast(message, variant) {
+    SelectOrg(item) {
+      this.filter.organ = item.id;
+      this.Refresh();
+    },
+    TotalOrg() {
+      this.filter.oblastid = null;
+      this.filter.specialization = null;
+      this.filter.categoryid = null;
+      this.filter.organ = null;
+      this.RefreshOrg();
+    },
+    RefreshOrg() {
+      this.orgLoading = true;
+      OrganizationService.OrganizationGetOblastID(
+        this.filter.oblastid,
+        this.filter.categoryid,
+        this.filter.specialization,
+        this.filter.isconnect,
+        this.filter.socialid,
+        this.lang
+      )
+        .then((res) => {
+          this.OrganizationList = res.data.data;
+          this.orgLoading = false;
+        })
+        .catch((error) => {
+          this.orgLoading = false;
+        });
+      this.Refresh();
+    },
+    ChangeConnectOrg(bool) {
+      if (bool === false) {
+        if (this.filter.isconnect === false) {
+          this.filter.isconnect = null;
+        } else {
+          this.filter.isconnect = false;
+        }
+      }
+      if (bool === true) {
+        if (this.filter.isconnect === true) {
+          this.filter.isconnect = null;
+        } else {
+          this.filter.isconnect = true;
+        }
+      }
+      this.RefreshOrg();
+    },
+    makeToast(message, variant) {
       this.$toast({
         component: ToastificationContent,
         props: {
@@ -327,9 +340,7 @@ export default {
     },
     Refresh() {
       this.loading = true;
-    InstructionService.GetInstructionList(
-        
-      ).then((res) => {
+      InstructionService.GetInstructionList().then((res) => {
         this.InfoList = res.data;
         this.totalrow = res.data.total_row;
         this.loading = false;
