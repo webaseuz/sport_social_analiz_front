@@ -3,7 +3,8 @@
     class="nav-item"
     :class="{
       'active': isActive,
-      'disabled': item.disabled
+      'disabled': item.disabled,
+      'd-none': item.visible === true ? false : !$can(item.visible,'permissions')
     }"
     :title="$t(item.title)"
   >

@@ -80,5 +80,7 @@ module.exports = {
     "no-whitespace-before-property": "off",
     "prefer-const": "off",
     "no-useless-concat": "off",
+    "no-plusplus": "off",
+    "semi-spacing": "off",
   },
 };
