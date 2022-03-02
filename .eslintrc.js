@@ -82,5 +82,6 @@ module.exports = {
     "no-useless-concat": "off",
     "no-plusplus": "off",
     "semi-spacing": "off",
+    "import/extensions": "off",
   },
 };

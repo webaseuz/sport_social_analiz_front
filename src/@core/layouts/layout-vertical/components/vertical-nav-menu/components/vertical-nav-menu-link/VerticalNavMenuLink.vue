@@ -4,7 +4,7 @@
     :class="{
       'active': isActive,
       'disabled': item.disabled,
-      'd-none': item.visible === true ? false : !$can(item.visible,'permissions')
+      'd-none': item.visible === true ? false : !can(item.visible,'permissions')
     }"
     :title="$t(item.title)"
   >
@@ -33,8 +33,11 @@ import { BLink, BBadge } from 'bootstrap-vue'
 import { useUtils as useI18nUtils } from '@core/libs/i18n'
 import useVerticalNavMenuLink from './useVerticalNavMenuLink'
 import mixinVerticalNavMenuLink from './mixinVerticalNavMenuLink'
+import Permission from '../../../../../../../navigation/vertical/permissions.js'
+
 
 export default {
+  
   components: {
     BLink,
     BBadge,
@@ -49,11 +52,13 @@ export default {
   setup(props) {
     const { isActive, linkProps, updateIsActive } = useVerticalNavMenuLink(props.item)
     const { t } = useI18nUtils()
+    const {can} = Permission
     const { canViewVerticalNavMenuLink } = useAclUtils()
 
     return {
       isActive,
       linkProps,
+      can,
       updateIsActive,
 
       // ACL
