@@ -72,7 +72,7 @@
         <b-row>
           <b-col sm="12" md="12" lg="4" v-for="(item, index) in InfoList" :key="index">
             <b-card>
-              <p>{{ item.content || "-" }}</p>
+              <p style="fontSize:18px">{{ item.content || "-" }}</p>
               <div class="text-right">
                 <b-link v-b-tooltip.hover :title="$t('download')" @click="DownloadFile(item)">
                   <feather-icon

@@ -22,9 +22,9 @@
       <!-- Bookmarks Container -->
       <!-- <bookmarks /> -->
       <div>
-        <p class="m-0 p-0" style="font-size:16px;font-weight : 600">{{ $t('Organization') }} : MOTAS </p>
+        <p class="m-0 p-0" style="font-size:16px;font-weight : 600">{{ $t('Organization') }} : {{this.userName}} </p>
         <!-- <br /> --> 
-        <p class="m-0 p-0" style="font-size:12px;">{{ $t('Username') }} : admin</p>
+        <p class="m-0 p-0" style="font-size:12px;">{{ $t('Username') }} : {{this.admin}}</p>
       </div>
     </div>
 
@@ -71,5 +71,15 @@ export default {
       default: () => {},
     },
   },
+  data(){
+    return{
+      userName: localStorage.getItem("user_info")
+      ? JSON.parse(localStorage.getItem("user_info")).organization
+      : "",
+      admin:localStorage.getItem("user_info") ? JSON.parse(localStorage.getItem("user_info")).username:"",
+    }
+  },
+  created(){
+  }
 }
 </script>
