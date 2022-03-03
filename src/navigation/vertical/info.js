@@ -103,7 +103,7 @@ export default [
     title: "Organization",
     route: "Organization",
     icon: "HexagonIcon",
-    visible: "view_organizationprofile",
+    visible: "view_institution",
   },
   {
     title: "User",
