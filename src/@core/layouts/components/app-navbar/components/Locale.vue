@@ -32,6 +32,7 @@
 
 <script>
 import { BNavItemDropdown, BDropdownItem, BImg } from 'bootstrap-vue'
+import UserService from '@/services/user.service'
 
 export default {
   components: {
@@ -49,9 +50,14 @@ export default {
     ChangeLang(item){
       this.$i18n.locale = item.locale
       localStorage.setItem('locale',item.locale)
+     this.ChangeLanguageUser(item)
       window.location.reload()
-    }
+    },
+    ChangeLanguageUser (item){
+     UserService.UserData(item.locale)
+  }
   },
+  
   setup() {
     /* eslint-disable global-require */
     const locales = [

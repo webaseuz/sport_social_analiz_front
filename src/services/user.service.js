@@ -22,6 +22,9 @@ const UserService = {
     },
     login(data){
         return ApiService.post(`/login/`,data)
+    },
+    UserData(lang){
+        return ApiService.get(`/UserData/${lang}/`)
     }
 }
 export default UserService
