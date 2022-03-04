@@ -74,7 +74,7 @@ export default {
   data(){
     return{
       userName: localStorage.getItem("user_info")
-      ? JSON.parse(localStorage.getItem("user_info")).organization
+      ? JSON.parse(localStorage.getItem("user_info")).organization[0]
       : "",
       admin:localStorage.getItem("user_info") ? JSON.parse(localStorage.getItem("user_info")).username:"",
     }

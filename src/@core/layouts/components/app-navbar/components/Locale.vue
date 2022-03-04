@@ -50,11 +50,14 @@ export default {
     ChangeLang(item){
       this.$i18n.locale = item.locale
       localStorage.setItem('locale',item.locale)
-     this.ChangeLanguageUser(item)
-      window.location.reload()
+      // window.location.reload()
+         this.ChangeLanguageUser(item)
     },
     ChangeLanguageUser (item){
-     UserService.UserData(item.locale)
+     UserService.UserData(item.locale).then(res =>{
+       localStorage.setItem('user_info',JSON.stringify(res.data))
+       window.location.reload()
+     })
   }
   },
   
