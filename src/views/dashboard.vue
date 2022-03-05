@@ -99,16 +99,21 @@
               <b-overlay :show="selectOrgLoading || MainLoading">
                   <b-card>
                     <b-row>
-                        <b-col sm="12" md="12" lg="6">
-                            <b-button size="md" class="mr-1 my-1" @click="SelectSocial(null)" :variant="filter.socialid === null ? 'primary' :'outline-primary'"> <feather-icon size="30" style="margin-top:8px;margin-bottom:8px" icon="GridIcon"></feather-icon> </b-button>
-                            <b-button size="md" class="mr-1 my-1" @click="SelectSocial('web_site')" :disabled="canView.web_site == null || !canView.web_site.bool" :variant="canView.web_site &&canView.web_site.bool ? filter.socialid === 'web_site' ? 'primary' : 'outline-primary' : 'outline-danger'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="GlobeIcon"></feather-icon> </b-button>
-                            <b-button size="md" class="mr-1 my-1" @click="SelectSocial('telegram')" :disabled="canView.telegram == null || !canView.telegram.bool" :variant="canView.telegram && canView.telegram.bool ? filter.socialid === 'telegram' ? 'primary' : 'outline-primary' : 'outline-danger'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="NavigationIcon"></feather-icon> </b-button>
-                            <b-button size="md" class="mr-1 my-1" @click="SelectSocial('fb_page')" :disabled="canView.fb_page == null || !canView.fb_page.bool" :variant="canView.fb_page && canView.fb_page.bool ? filter.socialid === 'fb_page' ? 'primary' : 'outline-primary' : 'outline-danger'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="FacebookIcon"></feather-icon> </b-button>
-                            <b-button size="md" class="mr-1 my-1" @click="SelectSocial('instagram_new')" :disabled="canView.instagram_new == null || !canView.instagram_new.bool" :variant="canView.instagram_new && canView.instagram_new.bool ? filter.socialid === 'instagram_new' ? 'primary' : 'outline-primary' : 'outline-danger'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="InstagramIcon"></feather-icon> </b-button>
-                            <b-button size="md" class="mr-1 my-1" @click="SelectSocial('youtube')" :disabled="canView.youtube == null || !canView.youtube.bool" :variant="canView.youtube && canView.youtube.bool ? filter.socialid === 'youtube' ? 'primary' : 'outline-primary' : 'outline-danger'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="YoutubeIcon"></feather-icon> </b-button>
-                            <!-- <b-button size="md" class="mr-1" @click="SelectSocial('twitter')" :disabled="!canView.twitter" :variant="canView.twitter ? filter.socialid === 'twitter' ? 'primary' : 'outline-primary' : 'outline-danger'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="TwitterIcon"></feather-icon> </b-button> -->
-                        </b-col>
-                        <b-col sm="12" md="12" lg="6" class="d-flex align-items-center justify-content-end">
+                        <b-col sm="12" md="12" lg="12">
+                            <b-button  size="md" class="mr-1 my-1"  @click="SelectSocial(null)" :variant="filter.socialid === null ? 'primary' :'outline-primary'"> <feather-icon size="30" style="margin-top:8px;margin-bottom:8px" icon="GridIcon"></feather-icon> </b-button>
+                            <b-button v-b-tooltip.focus :title="$t('web_site')" size="md" class="mr-1 my-1" @click="SelectSocial('web_site')" :disabled="canView.web_site == null || !canView.web_site.bool" :variant="canView.web_site &&canView.web_site.bool ? filter.socialid === 'web_site' ? 'primary' : 'outline-primary' : 'outline-danger'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="GlobeIcon"></feather-icon> </b-button>
+                            <b-button v-b-tooltip.focus :title="$t('telegram')" size="md" class="mr-1 my-1" @click="SelectSocial('telegram')" :disabled="canView.telegram == null || !canView.telegram.bool" :variant="canView.telegram && canView.telegram.bool ? filter.socialid === 'telegram' ? 'primary' : 'outline-primary' : 'outline-danger'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="NavigationIcon"></feather-icon> </b-button>
+                            <b-button v-b-tooltip.focus :title="$t('fb_page')" size="md" class="mr-1 my-1" @click="SelectSocial('fb_page')" :disabled="canView.fb_page == null || !canView.fb_page.bool" :variant="canView.fb_page && canView.fb_page.bool ? filter.socialid === 'fb_page' ? 'primary' : 'outline-primary' : 'outline-danger'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="FacebookIcon"></feather-icon> </b-button>
+                            <b-button v-b-tooltip.focus :title="$t('instagram_new')" size="md" class="mr-1 my-1" @click="SelectSocial('instagram_new')" :disabled="canView.instagram_new == null || !canView.instagram_new.bool" :variant="canView.instagram_new && canView.instagram_new.bool ? filter.socialid === 'instagram_new' ? 'primary' : 'outline-primary' : 'outline-danger'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="InstagramIcon"></feather-icon> </b-button>
+                            <b-button v-b-tooltip.focus :title="$t('youtube')" size="md" class="mr-1 my-1" @click="SelectSocial('youtube')" :disabled="canView.youtube == null || !canView.youtube.bool" :variant="canView.youtube && canView.youtube.bool ? filter.socialid === 'youtube' ? 'primary' : 'outline-primary' : 'outline-danger'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="YoutubeIcon"></feather-icon> </b-button>
+                           <b-button v-b-tooltip.focus :title="$t('television')" size="md" class="mr-1 my-1" @click="SelectSocial('television')" :variant="filter.socialid === 'television' ? 'primary' : 'outline-primary'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="TvIcon"></feather-icon> </b-button>
+                           <b-button v-b-tooltip.focus :title="$t('radio')" size="md" class="mr-1 my-1" @click="SelectSocial('radio')" :variant="filter.socialid === 'radio' ? 'primary' : 'outline-primary'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="RadioIcon"></feather-icon> </b-button>
+                           <b-button v-b-tooltip.focus :title="$t('gazeta')" size="md" class="mr-1 my-1" @click="SelectSocial('gazeta')" :variant="filter.socialid === 'gazeta' ? 'primary' : 'outline-primary'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="BookIcon"></feather-icon> </b-button>
+                           <b-button v-b-tooltip.focus :title="$t('jurnal')" size="md" class="mr-1 my-1" @click="SelectSocial('jurnal')" :variant="filter.socialid === 'jurnal' ? 'primary' : 'outline-primary'"> <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="BookOpenIcon"></feather-icon> </b-button>
+                        <b-button v-b-tooltip.focus :title="$t('boshqalar')" size="md" class="mr-1 my-1" @click="SelectSocial('other')" :variant="filter.socialid === 'other' ? 'primary' : 'outline-primary'" > <feather-icon size="28" style="margin-top:8px;margin-bottom:8px" icon="MoreHorizontalIcon"></feather-icon> </b-button>
+                       
+                       </b-col>
+                        <b-col sm="12" md="12" lg="6" class="d-flex align-items-center ">
                             <b-form-input
                                 id="basicInput"
                                 placeholder="Enter Email"
@@ -125,12 +130,7 @@
                             />
                             <b-button variant="primary" @click="SelectDate"> <feather-icon icon="SearchIcon"></feather-icon> </b-button>
                         </b-col>
-                    </b-row>
-                    <b-row class="mt-1" >
-                        <b-col>
-                            <b-button v-if="!!filter.socialid && !!filter.orgid" variant="primary" @click="GotoSocialWebSite"> {{ $t('go') }} <feather-icon icon="ChevronsRightIcon"></feather-icon> </b-button>
-                        </b-col>
-                        <b-col class="d-flex align-items-center justify-content-end">
+                        <b-col  sm="12" md="12" lg="6" class="d-flex align-items-center justify-content-end">
                             <b-button-group
                                     size="sm"
                                 >
@@ -160,6 +160,12 @@
                                     </b-button>
                                 </b-button-group>
                         </b-col>
+                    </b-row>
+                    <b-row class="mt-1" >
+                        <b-col>
+                            <b-button v-if="!!filter.socialid && !!filter.orgid" variant="primary" @click="GotoSocialWebSite"> {{ $t('go') }} <feather-icon icon="ChevronsRightIcon"></feather-icon> </b-button>
+                        </b-col>
+                        
                     </b-row>
                 </b-card>
                 <b-row class="match-height" >
@@ -249,7 +255,7 @@
                     </b-col>
                     
                     </b-row>
-                    <b-row v-if="PostedSeries.length > 0 && !filter.orgid">
+                    <b-row v-if="PostedSeries.length > 0 && !filter.orgid" v-show="filter.socialid != 'gazeta'&&filter.socialid != 'jurnal'&&filter.socialid != 'other'&&filter.socialid != 'television'&&filter.socialid != 'radio' ">
                         <b-col sm="12" md="12" lg="4">
                             <b-card>
                                 <vue-apex-charts
@@ -470,6 +476,7 @@ export default {
                         name: this.$t('isConnectFalse'),
                         data: Object.values(res.data).map(item => item.isconnect_false_count)
                     },
+
                 ]
                 this.ConnectDataOptions = {
                     colors: [
@@ -607,7 +614,7 @@ export default {
                 this.filter.categoryid,
                 this.filter.specialization,
                 this.filter.orgid,
-                this.filter.isconnect
+                this.filter.isconnect 
             ).then(res => {
                 this.canView = res.data
                 this.MainLoading = false

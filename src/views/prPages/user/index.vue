@@ -70,7 +70,7 @@ export default{
             },
             fields : [
                 { key : 'username',label : this.$t('username') },
-                { key : 'organization',label : this.$t('organization') },
+                { key : 'organization_name',label : this.$t('organization') },
                 { key : 'inn',label : this.$t('inn') },
                 { key : 'email',label : this.$t('email') },
                 { key : 'date_joined',label : this.$t('date_joined') },

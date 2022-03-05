@@ -5,6 +5,7 @@
       'open': isOpen,
       'disabled': item.disabled,
       'sidebar-group-active': isActive,
+      'd-none':isVisible(item.visible)
     }"
   >
   <!-- v-if="canViewVerticalNavMenuGroup(item)" -->
@@ -12,7 +13,7 @@
       class="d-flex align-items-center"
       @click="() => updateGroupOpen(!isOpen)"
     >
-      <feather-icon :icon="item.icon || 'CircleIcon'" />
+      <feather-icon :icon="item.icon || 'CircleIcon'" />  
       <span class="menu-title text-truncate">{{ t(item.title) }}</span>
       <b-badge
         v-if="item.tag"
@@ -66,6 +67,16 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  methods:{
+   isVisible(arr){
+      var bool = null
+      for(let i=0; i < arr.length; i++){
+        if(arr[i] === true) return false
+        bool = bool || this.$can(arr[i], 'permissions')
+      }
+      return !bool
+    }
   },
   setup(props) {
     const {

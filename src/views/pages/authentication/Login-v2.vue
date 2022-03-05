@@ -6,7 +6,7 @@
       <b-link class="brand-logo">
         <b-img width="100px" src="@/assets/images/logo/logo.svg"></b-img>
         <h1 class="brand-text text-primary ml-1 d-flex align-items-center">
-          MOTAS PRESS <br> INDEKS 
+          MOTACH PRESS <br> INDEKS 
         </h1>
       </b-link>
       <!-- /Brand logo-->
@@ -257,6 +257,7 @@ export default {
           this.Loading = true
           UserService.login(this.login).then(res => {
             localStorage.setItem('auth_token',res.data.access)
+            localStorage.setItem("user_info", JSON.stringify(res.data));
             ApiService.setHeader()
             this.Loading = false
             this.$router.push('/')
