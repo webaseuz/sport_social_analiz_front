@@ -72,5 +72,8 @@ const TelevisionService = {
   InsertFile(data) {
     return ApiService.post(`/InsertFile/`, data);
   },
+  Send(){
+    return ApiService.get('/CreateTelevision/')
+  }
 };
 export default TelevisionService;
