@@ -47,6 +47,9 @@
           <template v-slot:empty>
             <h5 class="text-center">{{ $t("NoItems") }}</h5>
           </template>
+          <template #cell(status)="{item}">
+              <b-badge :variant="item.status == 'Received' || item.status == 'Accepted' ? 'success' : item.status == 'NotAccept' ||  item.status == 'NotReceived' ? 'danger' : 'primary'"> {{ $t(item.status) }} </b-badge>
+          </template>
           <template #cell(actions)="{item}">
             <b-link @click="EditItem(item)" style="margin-right:5px">
               <feather-icon icon="EditIcon"></feather-icon>
@@ -178,6 +181,7 @@ export default {
           tdClass: "text-left",
         },
         { key: "content", label: this.$t("content"), tdClass: "text-left" },
+        { key: "status", label: this.$t("status"), tdClass: "text-center" },
         { key: !this.iscomponent ? "actions" : "", label: this.$t("actions") },
       ],
       totalrow: 0,

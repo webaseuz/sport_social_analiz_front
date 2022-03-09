@@ -55,7 +55,7 @@ const TelevisionService = {
     );
   },
   UpdateTelevision(id, data) {
-    return ApiService.put(`/UpdateTelevision/${id}/`, data);
+    return ApiService.put(`/UpdateTelevision/${id}/`, data); 
   },
   Update(data) {
     if (
@@ -72,8 +72,25 @@ const TelevisionService = {
   InsertFile(data) {
     return ApiService.post(`/InsertFile/`, data);
   },
-  Send(){
-    return ApiService.get('/CreateTelevision/')
+  Send(id){
+    return ApiService.get(`/SentTelevision/${id}/`)
+  },
+  GetAllSentTelevision(
+    page,
+    limit,
+    organ,
+    satsial,
+    date_from,
+    date_to,
+    lang
+  ){
+    return ApiService.get(`/GetAllSentTelevision/page=${page}&limit=${limit}&satsial=${satsial}&organ=${organ}&date_from=${date_from}&date_to=${date_to}&lang=${lang}/`)
+  },
+  Accept(id){
+    return ApiService.get(`/UpdateTelevisionStatusToConfirm/${id}/`)
+  },
+  NotAccept(id){
+    return ApiService.get(`/UpdateTelevisionStatusToNotConfirm/${id}/`)
   }
 };
 export default TelevisionService;

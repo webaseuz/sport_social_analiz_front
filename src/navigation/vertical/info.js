@@ -52,6 +52,12 @@ export default [
     visible: "view_television",
   },
   {
+    title: "SentTelevision",
+    route: "SentTelevision",
+    icon: "TvIcon",
+    visible: "view_television",
+  },
+  {
     title: "TelevisionPosition",
     route: "TelevisionMain",
     icon: "TvIcon",
