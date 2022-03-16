@@ -47,9 +47,15 @@
           <template v-slot:empty>
             <h5 class="text-center">{{ $t("NoItems") }}</h5>
           </template>
+          <template #cell(status)="{item}">
+              <b-badge :variant="item.status == 'Received' || item.status == 'Accepted' ? 'success' : item.status == 'NotAccept' ||  item.status == 'NotReceived' ? 'danger' : 'primary'"> {{ $t(item.status) }} </b-badge>
+          </template>
           <template #cell(actions)="{item}">
             <b-link @click="EditItem(item)" style="margin-right:5px">
               <feather-icon icon="EditIcon"></feather-icon>
+            </b-link>
+            <b-link @click="OpenSendModal(item)" style="margin-right:5px">
+              <feather-icon icon="SendIcon"></feather-icon>
             </b-link>
             <b-link @click="OpenDeleteModal(item)">
               <feather-icon icon="TrashIcon"></feather-icon>
@@ -79,6 +85,37 @@
                     </b-button>
                     <b-button @click="Delete(item)" variant="success">
                       <b-spinner small v-if="DeleteLoading"></b-spinner>
+                      {{ $t("yes") }}
+                    </b-button>
+                  </b-col>
+                </b-row>
+              </b-card-text>
+            </b-modal>
+            <b-modal
+              :ref="'SendModal' + item.id"
+              no-close-on-backdrop
+              hide-footer
+            >
+              <template #modal-title>
+                {{ $t("Send") }}
+              </template>
+              <b-card-text>
+                <b-row>
+                  <b-col>
+                    {{ $t("WantSend") }}
+                  </b-col>
+                </b-row>
+                <b-row>
+                  <b-col class="text-right">
+                    <b-button
+                      class="mr-1"
+                      @click="$refs['SendModal' + item.id].hide()"
+                      variant="danger"
+                    >
+                      {{ $t("no") }}
+                    </b-button>
+                    <b-button @click="Send(item)" variant="success">
+                      <b-spinner small v-if="SendLoading"></b-spinner>
                       {{ $t("yes") }}
                     </b-button>
                   </b-col>
@@ -144,11 +181,13 @@ export default {
           tdClass: "text-left",
         },
         { key: "content", label: this.$t("content"), tdClass: "text-left" },
+        { key: "status", label: this.$t("status"), tdClass: "text-center" },
         { key: !this.iscomponent ? "actions" : "", label: this.$t("actions") },
       ],
       totalrow: 0,
       DeleteLoading: false,
       lang: localStorage.getItem("locale"),
+      SendLoading : false
     };
   },
   created() {
@@ -190,6 +229,9 @@ export default {
     OpenDeleteModal(item) {
       this.$refs["DeleteModal" + item.id].show();
     },
+    OpenSendModal(item){
+      this.$refs["SendModal" + item.id].show();
+    },
     Refresh() {
       const current = new Date();
       this.loading = true;
@@ -230,6 +272,18 @@ export default {
           this.DeleteLoading = false;
         });
     },
+    Send(item){
+      this.SendLoading = true
+      TelevisionService.Send(item.id).then(res => {
+        this.makeToast(this.$t("SendSuccess"), "success");
+        this.SendLoading = false
+        this.$refs["SendModal" + item.id].hide();
+        this.Refresh();
+      }).catch((error) => {
+        this.SendLoading
+         = false;
+      });
+    }
   },
 };
 </script>

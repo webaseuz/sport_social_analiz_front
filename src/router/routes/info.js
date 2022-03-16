@@ -202,6 +202,20 @@ export default [
     },
   },
   {
+    path: "/senttelevision",
+    name: "SentTelevision",
+    component: () => import("@/views/prPages/television/send.vue"),
+    meta: {
+      pageTitle: "SentTelevision",
+      breadcrumb: [
+        {
+          text: "Television",
+          active: true,
+        },
+      ],
+    },
+  },
+  {
     path: "/television/indexMain",
     name: "TelevisionMain",
     component: () => import("@/views/prPages/television/indexMain.vue"),
