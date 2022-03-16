@@ -23,19 +23,19 @@ export default [
     title: "ConnectionOrg",
     route: "ConnectionOrg",
     icon: "LinkIcon",
-    visible: "view_organizationprofile",
+    visible: "view_affiliated_organization",
   },
   {
     title: "RateByPost",
     route: "RateByPost",
     icon: "StarIcon",
-    visible: "view_organizationprofile",
+    visible: "view_rate_bypost",
   },
   {
     title: "RateByAttr",
     route: "RateByAttr",
     icon: "StarIcon",
-    visible: "view_facebook",
+    visible: "view_rate_by_attr",
     // style: { ImageCss },
   },
 
@@ -43,7 +43,7 @@ export default [
     title: "Top10",
     route: "Top10",
     icon: "ClipboardIcon",
-    visible: "view_organizationprofile",
+    visible: "view_top10",
   },
   {
     title: "Television",
@@ -55,7 +55,7 @@ export default [
     title: "TelevisionPosition",
     route: "TelevisionMain",
     icon: "TvIcon",
-    visible: "view_television",
+    visible: "view_television_position",
   },
   {
     title: "TelevisionPosition",
@@ -67,7 +67,7 @@ export default [
     title: "SpesService",
     route: "SpesSerice",
     icon: "SettingsIcon",
-    visible: "view_organizationprofile",
+    visible: "view_spesservice",
   },
   {
     title: "Rate",
@@ -79,7 +79,7 @@ export default [
     title: "ContactOrganization",
     route: "ContactOrganization",
     icon: "PhoneIcon",
-    visible: "view_organizationprofile",
+    visible: "view_contact_organization",
   },
   // {
   //   title: 'SocialInfo',
@@ -91,7 +91,7 @@ export default [
     title: "InstructionAdd",
     route: "Instruction",
     icon: "FileTextIcon",
-    visible: "view_instruction",
+    visible: "view_add_Instruction",
   },
   {
     title: "Instruction",
