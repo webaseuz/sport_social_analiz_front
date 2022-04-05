@@ -34,7 +34,7 @@ export default [
   {
     title: "RateByAttr",
     route: "RateByAttr",
-    icon: "StarIcon",
+    icon: "ActivityIcon",
     visible: "view_rate_by_attr",
     // style: { ImageCss },
   },
@@ -48,7 +48,7 @@ export default [
   {
     title: "Television",
     route: "Television",
-    icon: "TvIcon",
+    icon: "EditIcon",
     visible: "view_television",
   },
   {
@@ -60,7 +60,7 @@ export default [
   {
     title: "TelevisionPosition",
     route: "TelevisionMain",
-    icon: "TvIcon",
+    icon: "BarChartIcon",
     visible: "view_television_position",
   },
   {
@@ -96,7 +96,7 @@ export default [
   {
     title: "InstructionAdd",
     route: "Instruction",
-    icon: "FileTextIcon",
+    icon: "LogInIcon",
     visible: "view_add_Instruction",
   },
   {
