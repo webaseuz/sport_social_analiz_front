@@ -190,8 +190,8 @@
                             <b-th> {{ item.date }} </b-th>
                             <b-th>{{ item.web_site_url || '-' }}</b-th>
                             <b-th>{{ item.web_site_like || 0 }}</b-th>
-                            <b-th>{{ item.telegram_url_url || '-' }}</b-th>
-                            <b-th>{{ item.telegram_url_views || 0 }}</b-th>
+                            <b-th><b-button v-if="item.telegram_url" variant="primary" size="sm" @click="GotoSocial(item.telegram_url)"> {{ $t('go') }} </b-button></b-th>
+                            <b-th>{{ item.telegram_views || 0 }}</b-th>
                             <b-th> <b-button v-if="item.fb_page_url" variant="primary" size="sm" @click="GotoSocial(item.fb_page_url)"> {{ $t('go') }} </b-button> </b-th>
                             <b-th>{{ item.fb_page_likes || 0}}</b-th>
                             <b-th> <b-button v-if="item.instagram_new_url" variant="primary" size="sm" @click="GotoSocial(item.instagram_new_url)"> {{ $t('go') }} </b-button>  </b-th>
