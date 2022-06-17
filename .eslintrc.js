@@ -83,5 +83,8 @@ module.exports = {
     "no-plusplus": "off",
     "semi-spacing": "off",
     "import/extensions": "off",
+    "no-console": "off",
+    "func-names": "off",
+    "no-alert": "off",
   },
 };
