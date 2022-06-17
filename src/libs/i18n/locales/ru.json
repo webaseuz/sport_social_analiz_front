@@ -121,5 +121,6 @@
   "Deleted" : "Удален",
   "Sent" : "Отправлен",
   "Received" : "Принято",
-  "NotReceived" : "Не принято"
+  "NotReceived" : "Не принято",
+  "SentTelevision" : "Отчет о деятельности СМИ"
 }
