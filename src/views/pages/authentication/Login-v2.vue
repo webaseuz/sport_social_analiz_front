@@ -4,9 +4,9 @@
 
       <!-- Brand logo-->
       <b-link class="brand-logo">
-        <b-img width="100px" src="@/assets/images/logo/logo.svg"></b-img>
-        <h1 class="brand-text text-primary ml-1 d-flex align-items-center">
-          MOTACH PRESS <br> INDEKS 
+        <b-img width="100px" src="@/assets/images/pages/PRM.svg"></b-img>
+        <h1 class="brand-text  ml-1 d-flex align-items-center" style="color:#67A6F0">
+        PUBLIC RELATIONS <br> MANAGEMENT 
         </h1>
       </b-link>
       <!-- /Brand logo-->
@@ -18,6 +18,7 @@
       >
         <div class="w-100 d-lg-flex align-items-center justify-content-center px-5">
           <b-img
+          width="1000px"
             fluid
             :src="imgUrl"
             alt="Login V2"
@@ -226,7 +227,7 @@ export default {
       status: '',
       password: '',
       userEmail: '',
-      sideImg: require('@/assets/images/pages/login-v2.svg'),
+      sideImg: require('@/assets/images/pages/login_images2.png'),
       // validation rulesimport store from '@/store/index'
       required,
       email,
@@ -244,7 +245,7 @@ export default {
     imgUrl() {
       if (store.state.appConfig.layout.skin === 'dark') {
         // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.sideImg = require('@/assets/images/pages/login-v2-dark.svg')
+        this.sideImg = require('@/assets/images/pages/login_images2.png')
         return this.sideImg
       }
       return this.sideImg

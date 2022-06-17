@@ -25,12 +25,12 @@ import '@/libs/tour'
 import '@/@fake-db/db'
 import vSelect from 'vue-select'
 Vue.component('v-select', vSelect)
-axios.defaults.baseURL = 'http://sportpr-api.apptest.uz/api/'
+axios.defaults.baseURL = "http://customspr-api.apptest.uz/api/";
 const token = localStorage.getItem('auth_token')
 if(token){
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 }
-console.log(axios.defaults.headers.common['Authorization'])
+// console.log(axios.defaults.headers.common['Authorization'])
 ApiService.mount401Interceptor()
 // BSV Plugin Registration
 // Vue.use(ToastPlugin)

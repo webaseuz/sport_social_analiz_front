@@ -8,30 +8,30 @@ export const $themeBreakpoints = {}
 
 // APP CONFIG
 export const $themeConfig = {
-  app: {
-    appName: 'PRESS INDEKS', // Will update name in navigation menu (Branding)
-    // eslint-disable-next-line global-require
-    appLogoImage: require('@/assets/images/logo/logo.svg'), // Will update logo in navigation menu (Branding)
-  },
-  layout: {
-    isRTL: false,
-    skin: 'light', // light, dark, bordered, semi-dark
-    routerTransition: 'zoom-fade', // zoom-fade, slide-fade, fade-bottom, fade, zoom-out, none
-    type: 'vertical', // vertical, horizontal
-    contentWidth: 'full', // full, boxed
-    menu: {
-      hidden: false,
-      isCollapsed: true,
-    },
-    navbar: {
-      // ? For horizontal menu, navbar type will work for navMenu type
-      type: 'floating', // static , sticky , floating, hidden
-      backgroundColor: '', // BS color options [primary, success, etc]
-    },
-    footer: {
-      type: 'static', // static, sticky, hidden
-    },
-    customizer: true,
-    enableScrollToTop: true,
-  },
-}
+         app: {
+           appName: "PRM", // Will update name in navigation menu (Branding)
+           // eslint-disable-next-line global-require
+           appLogoImage: require("@/assets/images/pages/PRM.svg"), // Will update logo in navigation menu (Branding)
+         },
+         layout: {
+           isRTL: false,
+           skin: "light", // light, dark, bordered, semi-dark
+           routerTransition: "zoom-fade", // zoom-fade, slide-fade, fade-bottom, fade, zoom-out, none
+           type: "vertical", // vertical, horizontal
+           contentWidth: "full", // full, boxed
+           menu: {
+             hidden: false,
+             isCollapsed: true,
+           },
+           navbar: {
+             // ? For horizontal menu, navbar type will work for navMenu type
+             type: "floating", // static , sticky , floating, hidden
+             backgroundColor: "", // BS color options [primary, success, etc]
+           },
+           footer: {
+             type: "static", // static, sticky, hidden
+           },
+           customizer: true,
+           enableScrollToTop: true,
+         },
+       };
